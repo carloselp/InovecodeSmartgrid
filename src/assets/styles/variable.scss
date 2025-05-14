@@ -1,0 +1,91 @@
+@use '@angular/material' as mat;
+// @use '@angular/material/core' as mat-core;
+// @use '@angular/material/theming' as mat;
+
+@include mat.core();
+
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
+
+$bodyfont: 'Poppins', sans-serif;
+$headingfont: 'Poppins', sans-serif;
+
+$mat-primary: mat.m2-define-palette(mat.$m2-indigo-palette, A400, A100, A700);
+$mat-accent: mat.m2-define-palette(mat.$m2-pink-palette);
+$mat-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$mat: mat.m2-define-light-theme((
+  color: (
+    primary: $mat-primary,
+    accent: $mat-accent,
+    warn: $mat-warn,
+  )
+));
+
+@include mat.all-component-themes($mat); // Aplica o tema
+
+$topbar: #ff5722; /* Laranja vibrante - para a barra superior */
+$sidebar: #f4f4f4; /* Cinza claro - para o fundo da sidebar */
+$sidebar-white: #e0e0e0; /* Cinza claro suave */
+$sidebar-alt: #eceff1; /* Tom de cinza muito suave para alternar */
+$bodycolor: #fafafa; /* Cor de fundo neutra e moderna */
+$headingtext: #ffffff; /* Branco para destacar o texto do cabeçalho */
+$bodytext: #424242; /* Cinza escuro para o texto principal */
+$sidebar-text: #607d8b; /* Cinza azulado - para o texto da sidebar */
+$sidebar-icons: #607d8b; /* Laranja para ícones na sidebar */
+
+$font-16: 14px;
+$font-14: 14px;
+
+$light-text: #a6b7bf; /* Cor suave para texto secundário */
+$themecolor: #ff5722; /* Laranja vibrante */
+$themecolor-alt: #607d8b; /* Cinza azulado para ações e destaques */
+$themecolor-dark: #e64a19; /* Laranja mais escuro para destaque de alertas */
+
+/* Bootstrap Color */
+$danger: #f44336; /* Vermelho para alertas */
+$success: #4caf50; /* Verde moderno para sucesso */
+$warning: #ffb84d; /* Laranja suave para alertas */
+$primary: #2282ff; /* Laranja como a cor principal */
+$info: #607d8b; /* Cinza azulado para informações */
+$inverse: hsl(207, 100%, 96%); /* Azul claro suave */
+$muted: #99abb4; /* Cinza claro */
+$dark: #263238; /* Cinza escuro */
+$light: #f2f4f8; /* Cor clara para fundos */
+$extra-light: #ebf3f5; /* Cor extra clara para fundos */
+$secondary: #727b84; /* Cinza suave para secundários */
+
+/* Light colors */
+$light-danger: #fce4ec; /* Fundo suave de alerta */
+$light-success: #e8fdf8; /* Verde claro para sucesso */
+$light-warning: #fff8ec; /* Fundo suave para alertas */
+$light-primary: #fff3e0; /* Fundo suave para ações primárias */
+$light-info: #e3f3fd; /* Azul claro para informações */
+$light-inverse: #f6f6f6; /* Cor suave para elementos invertidos */
+$light-megna: #e0f2f4; /* Verde muito claro para destaque suave */
+
+$danger-dark: #d32f2f; /* Vermelho mais escuro para alertas críticos */
+$success-dark: #388e3c; /* Verde mais escuro para sucesso */
+$warning-dark: #e65100; /* Laranja mais forte para alertas críticos */
+$primary-dark: #e64a19; /* Laranja mais escuro */
+$info-dark: #028ee1; /* Azul escuro para informações */
+$red-dark: #d61f1f; /* Vermelho escuro para alertas */
+$inverse-dark: #232a37; /* Escuro para elementos invertidos */
+$dark-transparent: rgba(0, 0, 0, 0.05); /* Transparente suave para elementos sobrepostos */
+
+/* Normal Color */
+$white: #ffffff; /* Branco */
+$red: #fb3a3a; /* Vermelho para alertas */
+$yellow: #ffeb3b; /* Amarelo claro */
+$purple: #7460ee; /* Roxo - moderno e sofisticado */
+$blue: #1e88e5; /* Azul confiável */
+$megna: #4e9f3d; /* Verde musgo */
+
+ /* Extra Variables */
+$rgt: right;
+$lft: left;
+$border: rgba(120, 130, 140, 0.13); /* Cor de borda suave */
+$table-border: #f3f1f1; /* Borda de tabelas clara */
+$card-brd: #d7dfe3; /* Borda suave de cartões */
+$dark-text: #38454b; /* Texto escuro para boa leitura */
+$radius: 4px; /* Bordas arredondadas */
+$form-brd: #d9d9d9; /* Borda suave para formulários */

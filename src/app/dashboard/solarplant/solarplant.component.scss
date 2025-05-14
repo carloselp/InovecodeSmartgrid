@@ -1,0 +1,38 @@
+.dashboard {
+  padding: 20px;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.financial-card {
+  max-width: 300px;
+}
+
+.charts-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.chart {
+  width: 48%;
+}
+
+.pie-charts {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.pie-chart {
+  width: 48%;
+}
+
+.table-container {
+  margin-top: 30px;
+}

@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>
+    <img src="../../../assets/images/favicon.png" width="30px" height="30px">
+    Deletar Inversor
+</h1>
+<div mat-dialog-content>
+    <p>Você tem certeza de que deseja excluir este inversor?</p>
+</div>
+<div mat-dialog-actions style="padding: 20px;display: flex; justify-content: flex-end; ">
+    <button mat-button color="warn" (click)="cancel()">
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+    </button>
+    <button mat-button color="primary" (click)="delete()">
+        <mat-icon>add_circle</mat-icon>
+        Confirmar
+    </button>
+</div>

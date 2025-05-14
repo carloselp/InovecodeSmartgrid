@@ -1,0 +1,12 @@
+# Ignore a pasta node_modules e seu conteúdo
+node_modules/
+
+# Ignore a pasta .angular e seu conteúdo
+.angular/
+angular/
+
+# Ignore a pasta .angular/cache e seu conteúdo
+.angular/cache/
+angular/cache/
+# Project exclude paths
+/dist/

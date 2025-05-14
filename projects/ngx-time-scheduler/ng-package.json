@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/ngx-time-scheduler",
+  "lib": {
+    "entryFile": "src/public_api.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "@angular/cdk",
+    "moment"
+  ]
+}

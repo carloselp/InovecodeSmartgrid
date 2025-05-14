@@ -1,0 +1,247 @@
+<div class="lista-simplificada" *ngIf="!isLargeScreen">
+  <app-events-list></app-events-list>
+</div>
+
+<div style="background-color: white;" #schedulerContainer>
+  <div class="time-sch-wrapper" [style.height]="maxHeight" *ngIf="isLargeScreen">
+    <mat-toolbar-row style="padding: 15px;">
+      <div class="col-sm-2" *ngIf="!isFullScreen">
+        <mat-form-field appearance="outline" style="margin-top: 30px; margin-bottom: 20px; margin-right: 10px;"
+          matTooltip="Ir para viagens do dia selecionado">
+          <mat-label>Ir para dia...</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="gotoDate($event.value)">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-2" *ngIf="!isFullScreen">
+        <mat-form-field appearance="outline" style="margin-top: 30px; margin-bottom: 20px; margin-right: 10px;"
+          matTooltip="Escolha quantos dias serão exibidos">
+          <mat-label>Período</mat-label>
+          <mat-select [(value)]="currentPeriod" (selectionChange)="changePeriod($event.value)">
+            <mat-option *ngFor="let period of periods" [value]="period">
+              {{ period.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-2" *ngIf="isFullScreen">
+        <input class="date-full-screen" type="date" id="datePicker" (change)="gotoDateFull($event)">
+      </div>
+      <div class="col-sm-4" *ngIf="isFullScreen">
+        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+          [(ngModel)]="periodSelect" (change)="changePeriodFull()">
+
+          <mat-radio-button class="example-radio-button" *ngFor="let period of periods" [value]="period">
+            {{ period.name }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="col-sm-2">
+        <button mat-stroked-button color="accent" style="margin: 5px; background-color: white;"
+          matTooltip="Voltar nas viagens anteriores" (click)="previousPeriod()">{{text.PrevButton}}</button>
+        <button mat-stroked-button color="primary" style="margin: 5px; background-color: white;" *ngIf="showToday"
+          matTooltip="Viagens de hoje para frente" (click)="gotoToday()">{{text.TodayButton}}</button>
+        <button mat-stroked-button color="warn" style="margin: 5px; background-color: white;" (click)="nextPeriod()"
+          matTooltip="Avançar nas viagens futuras">{{text.NextButton}}</button>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="travel-container">
+          Filtro de Status de Viagens<br>
+          <button mat-stroked-button style="margin: 5px; background-color: #ffffff; color: ffc107; cursor: pointer;"
+            matTooltip="Adicionar nova viagem" (click)="events.TravelAddIconFromSection(createEmptySection())">
+            <mat-icon style="margin-right: -5px;">
+              add</mat-icon>
+          </button>
+          <button mat-stroked-button style="margin: 5px; background-color: #ffffff; color: #17a2b8; cursor: pointer;"
+            matTooltip="Atualizar viagens" (click)="reloadPage()">
+            <mat-icon style="margin-right: -5px;">sync</mat-icon>
+          </button>
+          <button mat-stroked-button style="margin: 5px; background-color: #ffffff; color: #28a745; cursor: pointer;"
+            matTooltip="Ir para escala" (click)="gotoScheduling()">
+            <mat-icon style="margin-right: -5px;">group</mat-icon>
+          </button>
+          <!-- <button mat-stroked-button style="margin: 5px; background-color: #ffffff; color: #dc8635; cursor: pointer;"
+            matTooltip="Viagens atrasadas" (click)="filterCompletes('travel-delayed')"><mat-icon style="margin-right: -5px;">alarm</mat-icon></button>
+          <button mat-stroked-button style="margin: 5px; background-color: #ffffff; color: #ff4646; cursor: pointer;"
+            matTooltip="Viagens canceladas" (click)="filterCompletes('travel-cancelled')"><mat-icon style="margin-right: -5px;">cancel</mat-icon></button> -->
+        </div>
+      </div>
+    </mat-toolbar-row>
+
+    <div class="time-sch-table-wrapper">
+      <table class="time-sch-table">
+        <tr *ngFor="let timeFrameHeader of header; let i = index; trackBy: trackByFn">
+
+          <td class="time-sch-section text-center" *ngIf="i === 0" [rowSpan]="periods.length">
+            <div *ngIf="!isFiltering" class="d-flex align-items-center justify-content-center">
+              <button mat-icon-button color="primary" (click)="toggleFilter()">
+                <mat-icon>search</mat-icon>
+              </button>
+              <span>Veículos</span>
+            </div>
+            <div class="filter-container" *ngIf="isFiltering">
+              <input style="width: 70%;" type="text" placeholder="Filtrar..." (input)="filterSectionTravels($event)" />
+              <a (click)="resetFilter()" style="cursor: pointer;">
+                <mat-icon>close</mat-icon>
+              </a>
+            </div>
+          </td>
+
+          <td class="text-center" *ngFor="let dateTime of timeFrameHeader.headerDetails; trackBy: trackByFn"
+            [colSpan]="dateTime.colspan" [title]="dateTime.tooltip? dateTime.tooltip : ''"
+            matTooltip="Ver as viagens do dia" (click)="events.TravelFilterFromData(dateTime.name)"
+            style="cursor: pointer;">
+            {{dateTime.name}}
+          </td>
+
+        </tr>
+      </table>
+
+      <div class="time-sch-content-wrap">
+        <table class="time-sch-table">
+          <tr *ngFor="let sectionTravel of filteredSectionTravels; trackBy: trackByFn"
+            [style.height]="sectionTravel.minRowHeight + 'px'">
+            <td class="time-sch-section text-center" #sectionTd
+              (click)="events.SectionClickTravel! ? events.SectionClickTravel(sectionTravel.section) : false"
+              (contextmenu)="events.SectionContextMenuTravel! ? events.SectionContextMenuTravel(sectionTravel.section, $event) : false"
+              [style.cursor]="events.SectionClickTravel! ? 'pointer' : ''"
+              [title]="sectionTravel.section.tooltip ? sectionTravel.section.tooltip : ''">
+
+              <div class="grid-container">
+                <div class="grid-left">
+                  {{sectionTravel.section.name.length >= 10 ? sectionTravel.section.name.toString().substring(0,10) +
+                  "..." : sectionTravel.section.name}}
+                </div>
+
+                <div class="grid-right">
+                  <mat-icon matTooltip="Status: {{getStatusInPortuguese(sectionTravel.section.status!)}}"
+                    [ngClass]="sectionTravel.section.status" (click)="$event.stopPropagation()">info</mat-icon>
+
+                  <mat-icon *ngIf="sectionTravel.section.status === 'available'" matTooltip="Adicionar viagem"
+                    class="available" (click)="events.TravelAddIconFromSection(sectionTravel.section!); 
+                    $event.stopPropagation()">add_circle</mat-icon>
+
+                  <mat-icon *ngIf="sectionTravel.section.status != 'available'" matTooltip="Não permitido"
+                    class="not-available" (click)="$event.stopPropagation()">add_circle</mat-icon>
+                </div>
+              </div>
+            </td>
+            <td *ngFor="let td of header[header.length - 1].headerDetails; trackBy: trackByFn"></td>
+          </tr>
+        </table>
+
+        <div class="time-sch-section-wrapper" [style.left]="SectionLeftMeasure" cdkDropListGroup>
+          <div class="time-sch-section-container" cdkDropList cdkDropListSortingDisabled
+            [cdkDropListData]="sectionTravel.section" (cdkDropListDropped)="drop($event)"
+            *ngFor="let sectionTravel of itemsFiltereds; trackBy: trackByFn"
+            [style.height]="sectionTravel.minRowHeight + 'px'">
+
+            <div class="time-sch-item" cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".time-sch-section-wrapper"
+              [cdkDragData]="itemMeta.item" [cdkDragDisabled]="!allowDragging"
+              *ngFor="let itemMeta of sectionTravel.itemMetas" [ngClass]="itemMeta.item.classes"
+              (click)="events.TravelClicked! ? events.TravelClicked($event, itemMeta.item, secondMenuTrigger) : false"
+              (contextmenu)="events.TravelContextMenu! ? openMenu($event, secondMenuTrigger) : false"
+              [matMenuTriggerFor]="second" #secondMenuTrigger="matMenuTrigger" [style.height]="'15px'"
+              [style.top]="'7px'" [style.left]="itemMeta.cssLeft + '%'" [style.width]="itemMeta.cssWidth + '%'"
+              [matTooltip]="(itemMeta.item.start.toString() | date: 'dd/MM HH:mm') + ' até ' + (itemMeta.item.end.toString() | date: 'dd/MM HH:mm')"
+              (mouseenter)="showInfo = true" (mouseleave)="showInfo = false">
+
+              <div class="item-drag-placeholder" *cdkDragPlaceholder [style.height]="(minRowHeight - 6) + 'px'"
+                [style.left]="itemMeta.cssLeft + '%'" [style.width]="'calc('+ itemMeta.cssWidth + '% - 6px)'"></div>
+
+              <div class="time-sch-item-start" *ngIf="itemMeta.isStart"></div>
+
+              <div class="time-sch-item-content" [title]="itemMeta.item.tooltip ? itemMeta.item.tooltip : ''">
+                <b>{{itemMeta.item.name}}</b>
+              </div>
+
+              <div class="time-sch-item-end" *ngIf="itemMeta.isEnd"></div>
+
+              <mat-menu #second="matMenu">
+                <div mat-menu-item class="custom-menu-item">
+                  <mat-icon style="color: orange;">access_time_outlined</mat-icon>
+                  <span>Informações do <b style="color: orange;">{{getPlateForId(itemMeta.item.sectionID)}}</b></span>
+                </div>
+
+                <div mat-menu-item class="custom-menu-item">
+                  <button mat-stroked-button (click)="events.TravelClickedMap! ? events.TravelClickedMap($event, itemMeta.item, secondMenuTrigger) : false">
+                    <mat-icon style="color: rgb(255, 74, 74);">location_on</mat-icon>
+                    Última posição
+                  </button>
+                </div>
+
+                <div mat-menu-item class="custom-menu-item">
+                  <mat-icon style="font-size: medium; color: rgb(0, 10, 104);">directions_car</mat-icon> 
+                  <span style="font-size: small;">Motorista: {{getDriverById(itemMeta.item.driver!)}}</span> 
+                </div>
+              
+                <div mat-menu-item class="custom-menu-item">
+                  <mat-icon style="font-size: medium;; color: rgb(73, 91, 255)">access_time</mat-icon>
+                  <span style="font-size: small;">Última posição: {{itemMeta.item.start.format('DD/MM/YYYY HH:MM')}}</span>
+                </div>
+              
+                <div mat-menu-item class="custom-menu-item">
+                  <mat-icon style="font-size: medium; color: rgb(212, 0, 255)">directions_bus</mat-icon>
+                  <span style="font-size: small;">Linha: {{itemMeta.item.name}}</span> 
+                </div>
+
+              </mat-menu>
+
+            </div>
+          </div>
+
+          <div class="time-sch-current-time" *ngIf="showCurrentTime" [title]="currentTimeTitle"
+            [style.visibility]="currentTimeVisibility" [style.left]="currentTimeIndicatorPosition"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Botão flutuante em telas menores -->
+<div class="fab-menu" [matMenuTriggerFor]="floatingMenu">
+  <mat-icon>menu</mat-icon>
+</div>
+
+<mat-menu #floatingMenu="matMenu">
+  <!-- Coloque os itens de menu que aparecerão ao clicar no botão flutuante -->
+  <button mat-menu-item>
+    <mat-form-field appearance="outline" matTooltip="Ir para viagens do dia selecionado" style="width: 100%;">
+      <mat-label>Ir para dia...</mat-label>
+      <input matInput [matDatepicker]="picker" (dateChange)="gotoDate($event.value)">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </button>
+  <button mat-menu-item>
+    <mat-form-field appearance="outline" matTooltip="Escolha quantos dias serão exibidos" style="width: 100%;">
+      <mat-label>Período</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let period of periods" (click)="changePeriod(period)">
+          {{period.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </button>
+  <button mat-menu-item (click)="previousPeriod()">{{text.PrevButton}}</button>
+  <button mat-menu-item (click)="gotoToday()" *ngIf="showToday">{{text.TodayButton}}</button>
+  <button mat-menu-item (click)="nextPeriod()">{{text.NextButton}}</button>
+  <button mat-menu-item matTooltip="Viagens aguardando início">
+    <mat-icon>hourglass_empty</mat-icon> Aguardando início
+  </button>
+  <button mat-menu-item>
+    <mat-icon>sync</mat-icon> Em andamento
+  </button>
+  <button mat-menu-item>
+    <mat-icon>check</mat-icon> Concluídas
+  </button>
+  <button mat-menu-item>
+    <mat-icon>alarm</mat-icon> Atrasadas
+  </button>
+  <button mat-menu-item>
+    <mat-icon>cancel</mat-icon> Canceladas
+  </button>
+  <!-- Continue adicionando os itens de menu correspondentes aqui -->
+</mat-menu>

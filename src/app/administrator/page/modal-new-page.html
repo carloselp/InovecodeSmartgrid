@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>
+  <img src="../../../assets/images/favicon.png" width="30px" height="30px">
+  Cadastro de páginas do Sistema
+</h1>
+<div mat-dialog-content>
+  <form [formGroup]="registerForm">
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>Dados da página</h4>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Nome da Página</mat-label>
+              <input matInput required placeholder="Nome da Página" type="text" formControlName="name_page">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Rota</mat-label>
+              <input matInput required placeholder="Rota" type="text" formControlName="route">
+            </mat-form-field>
+          </div>
+          <div class="form-group col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Ícone</mat-label>
+              <input matInput required placeholder="Ícone" type="text" formControlName="icon">
+            </mat-form-field>
+          </div>
+          <div class="form-group col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Agrupamento</mat-label>
+              <input matInput required placeholder="Agrupamento" type="text" formControlName="group_menu">
+            </mat-form-field>
+          </div>
+          <div class="form-group col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Ordem</mat-label>
+              <input matInput required placeholder="Ordem" type="text" formControlName="nav_item">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="button-container" style="padding: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+  <!-- Botão Cancelar com cor vermelha/alaranjada -->
+  <button mat-stroked-button (click)="cancel()" style="font-size: 14px; padding: 8px 16px; color: rgb(255, 136, 0);">
+    <mat-icon>cancel</mat-icon>
+    Cancelar
+  </button>
+
+  <!-- Botão Salvar com cor azul -->
+  <button mat-stroked-button (click)="save()" style="font-size: 14px; padding: 8px 16px; color: rgb(0, 174, 255);">
+    <mat-icon>add_circle</mat-icon>
+    Salvar
+  </button>
+</div>

@@ -1,0 +1,10 @@
+<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5 p-0 d-flex jc-c align-items-center">
+  <img src="assets/images/users/profile.png" alt="user" class="profile-pic">
+</button>
+<mat-menu #profile="matMenu" class="mymegamenu">
+  <button mat-menu-item (click)="sair()">
+    <mat-icon fontIcon="exit_to_app"></mat-icon>
+    Sair
+  </button>
+</mat-menu>
+

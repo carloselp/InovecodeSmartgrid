@@ -1,0 +1,30 @@
+.custom-menu { /* Deixa o menu mais largo */
+    background-color: #f7f9fc; /* Cor de fundo moderna */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra leve */
+  }
+  
+  /* Estilo para os itens do menu */
+  .custom-menu-item {
+    font-size: 16px; /* Texto maior */
+    font-weight: 500; /* Texto semi-negrito */
+    color: #37474f; /* Texto com tom escuro */
+    border-bottom: 1px solid #e0e0e0; /* Linha separadora */
+    transition: background-color 0.3s;
+  }
+  
+  .custom-menu-item:hover {
+    background-color: #fdefe3; /* Cor ao passar o mouse */
+    color: orange; /* Cor ao passar o mouse */
+  }
+  
+  /* Estilo para os ícones */
+  .custom-icon {
+    color: orange; /* Azul moderno */
+    margin-right: 12px; /* Espaçamento ao lado do texto */
+    font-size: 20px; /* Ícones maiores */
+  }
+  
+  .custom-icon:hover {
+    color: rgb(255, 136, 0); /* Ícone mais escuro ao passar o mouse */
+  }

@@ -1,0 +1,35 @@
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  /* Alinha os botões à direita */
+}
+
+::ng-deep .button-container button {
+  margin-left: 8px;
+  /* Espaçamento entre os botões */
+}
+
+::ng-deep button.mat-raised-button {
+  background-color: orange; // Cor laranja claro
+  color: white; // Cor do texto
+  transition: background-color 0.3s ease; // Transição suave de cor
+
+  &:hover {
+    background-color: rgb(255, 178, 35); // Torna um pouco mais claro ao passar o mouse
+  }
+
+  // Alinhe o ícone à esquerda do texto
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.add-button {
+  height: 70%;
+  background-color: #26c6da;
+  color: white;
+}
+
+.user-panel {
+  padding-top: 15px;
+}

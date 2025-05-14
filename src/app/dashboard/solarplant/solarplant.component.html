@@ -1,0 +1,77 @@
+<div class="dashboard">
+  <mat-card>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Data</mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="filters.openingDate" (dateChange)="filterData()">
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <button mat-icon-button matSuffix (click)="cleanStartData()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div class="row">
+    <div class="col-sm-12">
+      <mat-card>
+        <mat-card-content>
+          <apx-chart [series]="lineChartOptions.series!" [chart]="lineChartOptions.chart!"
+                     [xaxis]="lineChartOptions.xaxis!" [stroke]="lineChartOptions.stroke!"
+                     [dataLabels]="lineChartOptions.dataLabels!" [title]="lineChartOptions.title!"
+                     [tooltip]="lineChartOptions.tooltip!">
+          </apx-chart>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+<!--  <div class="row">-->
+<!--    <div class="col-sm-12">-->
+<!--      <mat-card>-->
+<!--        <mat-card-content>-->
+<!--          <table mat-table [dataSource]="dataSourceFilter">-->
+<!--            <ng-container matColumnDef="workOrder">-->
+<!--              <th mat-header-cell *matHeaderCellDef> Ordem de Serviço </th>-->
+<!--              <td mat-cell *matCellDef="let element"> {{ element.workOrder }} </td>-->
+<!--            </ng-container>-->
+
+<!--            <ng-container matColumnDef="vehicle">-->
+<!--              <th mat-header-cell *matHeaderCellDef> Veículo </th>-->
+<!--              <td mat-cell *matCellDef="let element"> {{ element.vehicle }} </td>-->
+<!--            </ng-container>-->
+
+<!--            <ng-container matColumnDef="status">-->
+<!--              <th mat-header-cell *matHeaderCellDef> Status </th>-->
+<!--              <td mat-cell *matCellDef="let element"> {{ element.statusOs }} </td>-->
+<!--            </ng-container>-->
+
+<!--            <ng-container matColumnDef="origin">-->
+<!--              <th mat-header-cell *matHeaderCellDef> Origem </th>-->
+<!--              <td mat-cell *matCellDef="let element"> {{ element.origin }} </td>-->
+<!--            </ng-container>-->
+
+<!--            <ng-container matColumnDef="openingDate">-->
+<!--              <th mat-header-cell *matHeaderCellDef> Data de Abertura </th>-->
+<!--              <td mat-cell *matCellDef="let element"> {{ element.openingDate | date:'dd/MM/yyyy' }} </td>-->
+<!--            </ng-container>-->
+
+<!--            <ng-container matColumnDef="closingDate">-->
+<!--              <th mat-header-cell *matHeaderCellDef> Data de Fechamento </th>-->
+<!--              <td mat-cell *matCellDef="let element"> {{ element.closingDate | date:'dd/MM/yyyy' }} </td>-->
+<!--            </ng-container>-->
+
+<!--            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--          </table>-->
+<!--          <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>-->
+<!--          </mat-paginator>-->
+<!--        </mat-card-content>-->
+<!--      </mat-card>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>

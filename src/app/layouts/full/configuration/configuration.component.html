@@ -1,0 +1,98 @@
+<mat-card>
+    <mat-card-content>
+        <mat-card-title>Configuração do sistema</mat-card-title>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-content>
+        <mat-card-title>Envio de mensagens de erro de integrações do sistema</mat-card-title>
+        <form>
+            <mat-form-field appearance="outline">
+                <mat-label>E-mails configurados</mat-label>
+                <mat-chip-grid #chipGrid aria-label="Seleção de e-mail">
+                    <mat-chip-row *ngFor="let fruit of fruits" (removed)="remove(fruit)">
+                        {{fruit}}
+                        <button matChipRemove [attr.aria-label]="'remove ' + fruit">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                </mat-chip-grid>
+                <input placeholder="New Fruit..." #fruitInput [formControl]="fruitCtrl" [matChipInputFor]="chipGrid"
+                    [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)" />
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                        {{fruit}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+<div class="row">
+    <div class="col-sm-4">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>Relatório Financeiro</mat-card-title>
+                <mat-list>
+                    <div mat-subheader>
+                        <button mat-stroked-button style="color: rgb(92, 176, 255);">
+                            <mat-icon>add</mat-icon> Adicionar E-Mail
+                        </button>
+                    </div>
+                    <mat-list-item *ngFor="let folder of folders">
+                        <mat-icon matListItemIcon>mail</mat-icon>
+                        <div matListItemTitle>{{folder.name}}</div>
+                        <div matListItemLine>{{folder.updated | date}} - Às 9:00</div>
+                        <mat-icon matListItemIcon
+                            style="cursor: pointer; margin-left: auto; color: #ff8282;">delete</mat-icon>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-sm-4">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>Relatório de operação</mat-card-title>
+                <mat-list>
+                    <div mat-subheader>
+                        <button mat-stroked-button style="color: rgb(92, 176, 255);">
+                            <mat-icon>add</mat-icon> Adicionar E-Mail
+                        </button>
+                    </div>
+                    <mat-list-item *ngFor="let note of notes">
+                        <mat-icon matListItemIcon>mail</mat-icon>
+                        <div matListItemTitle>{{note.name}}</div>
+                        <div matListItemLine>{{note.updated | date}} - Às 9:00</div>
+                        <mat-icon matListItemIcon
+                            style="cursor: pointer; margin-left: auto; color: #ff8282;">delete</mat-icon>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-sm-4">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>Relatório de manutenção</mat-card-title>
+                <mat-list>
+                    <div mat-subheader>
+                        <button mat-stroked-button style="color: rgb(92, 176, 255);">
+                            <mat-icon>add</mat-icon> Adicionar E-Mail
+                        </button>
+                    </div>
+                    <mat-list-item *ngFor="let note of manuts">
+                        <mat-icon matListItemIcon>mail</mat-icon>
+                        <div matListItemTitle>{{note.name}}</div>
+                        <div matListItemLine>{{note.updated | date}} - Às 9:00</div>
+                        <mat-icon matListItemIcon
+                            style="cursor: pointer; margin-left: auto; color: #ff8282;">delete</mat-icon>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

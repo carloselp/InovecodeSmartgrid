@@ -1,0 +1,107 @@
+<div class="profile-page">
+    <div class="background-image">
+        <img src="../../../assets/Imagens/logo.png" alt="Background Image">
+    </div>
+    <div class="profile-container">
+        <mat-card class="profile-card">
+            <div class="profile-header">
+                <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" hidden>
+                <img alt="Profile Image" class="profile-img" style="cursor: pointer;" (click)="triggerFileInput()">
+                <div class="profile-info">
+                    <h2>{{user?.firstName + " " + user?.lastName}}</h2>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <mat-card>
+                <mat-card-content>
+                    <mat-card-title>
+                        tenant?.points
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        Seguidores
+                    </mat-card-subtitle>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-sm-3">
+            <mat-card>
+                <mat-card-content>
+                    <mat-card-title>
+                        tenant?.points
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        Curtidas
+                    </mat-card-subtitle>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-sm-6">
+            <mat-card>
+                <mat-card-content>
+                    <mat-card-title>
+                        tenant?.name
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        Empresa
+                    </mat-card-subtitle>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <mat-card>
+                <mat-card-content>
+                    <mat-card-title>
+                        Redes Sociais
+                    </mat-card-title>
+                    <mat-list>
+                        <mat-list-item matTooltip="Clique para editar ou apagar" style="cursor: pointer;" (click)="editUser()">
+                          <div matListItemIcon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2.2c1.645 0 1.85 0 2.503.036.649.037 1.08.152 1.479.323.382.162.74.379 1.109.749.369.369.587.727.749 1.109.171.399.286.83.323 1.479.036.653.036.858.036 2.503s0 1.85-.036 2.503c-.037.649-.152 1.08-.323 1.479-.162.382-.379.74-.749 1.109-.369.369-.727.587-1.109.749-.399.171-.83.286-1.479.323-.653.036-.858.036-2.503.036s-1.85 0-2.503-.036c-.649-.037-1.08-.152-1.479-.323-.382-.162-.74-.379-1.109-.749-.369-.369-.587-.727-.749-1.109-.171-.399-.286-.83-.323-1.479-.036-.653-.036-.858-.036-2.503s0-1.85.036-2.503c.037-.649.152-1.08.323-1.479.162-.382.379-.74.749-1.109.369-.369.727-.587 1.109-.749.399-.171.83-.286 1.479-.323.653-.036.858-.036 2.503-.036m0-2.2c-1.68 0-1.898 0-2.557.037-.657.036-1.252.152-1.801.344-.558.193-1.038.461-1.499.922-.461.461-.729.941-.922 1.499-.192.549-.308 1.144-.344 1.801-.037.659-.037.877-.037 2.557s0 1.898.037 2.557c.036.657.152 1.252.344 1.801.193.558.461 1.038.922 1.499.461.461.941.729 1.499.922.549.192 1.144.308 1.801.344.659.037.877.037 2.557.037s1.898 0 2.557-.037c.657-.036 1.252-.152 1.801-.344.558-.193 1.038-.461 1.499-.922.461-.461.729-.941.922-1.499.192-.549.308-1.144.344-1.801.037-.659.037-.877.037-2.557s0-1.898-.037-2.557c-.036-.657-.152-1.252-.344-1.801-.193-.558-.461-1.038-.922-1.499-.461-.461-.941-.729-1.499-.922-.549-.192-1.144-.308-1.801-.344-.659-.037-.877-.037-2.557-.037zm0 5.4c-1.639 0-2.971 1.332-2.971 2.971s1.332 2.971 2.971 2.971 2.971-1.332 2.971-2.971-1.332-2.971-2.971-2.971zm0 4.942c-1.086 0-1.971-.885-1.971-1.971s.885-1.971 1.971-1.971 1.971.885 1.971 1.971-.885 1.971-1.971 1.971zm3.686-4.913c-.4 0-.724-.324-.724-.724s.324-.724.724-.724.724.324.724.724-.324.724-.724.724z"/></svg>
+                          </div>
+                          <div matListItemTitle>Instagram</div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item matTooltip="Clique para editar ou apagar" style="cursor: pointer;" (click)="editUser()">
+                            <div matListItemIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.597 0 0 .598 0 1.326v21.348C0 23.402.598 24 1.326 24h11.484v-9.294H9.691v-3.622h3.119V8.408c0-3.097 1.894-4.787 4.659-4.787 1.325 0 2.463.098 2.795.143v3.241l-1.918.001c-1.504 0-1.794.715-1.794 1.764v2.311h3.587l-.467 3.622h-3.12V24h6.116c.728 0 1.326-.598 1.326-1.326V1.326C24 .598 23.402 0 22.675 0z"/></svg>
+                            </div>
+                            <div matListItemTitle>Facebook</div>
+                          </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item matTooltip="Clique para editar ou apagar" style="cursor: pointer;" (click)="editUser()">
+                            <div matListItemIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.086 1.522 5.812L.001 24l6.373-1.516A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm6.032 17.338c-.205.58-.99 1.063-1.677 1.205-.445.093-1.005.167-3.317-.705-2.78-1.12-4.548-3.883-4.686-4.073-.137-.19-1.116-1.481-1.116-2.823 0-1.342.705-2.005.954-2.282.246-.275.548-.345.73-.345.185 0 .365.007.526.013.17.008.396-.064.622.478.245.578.836 2.002.91 2.146.074.145.122.314.024.502-.097.187-.145.31-.29.478-.144.167-.305.37-.44.49-.137.117-.28.246-.121.482.158.236.702 1.154 1.5 1.866 1.03.919 1.87 1.204 2.104 1.33.231.123.37.11.506-.065.136-.174.577-.67.73-.895.154-.225.31-.19.527-.114.216.076 1.374.649 1.606.768.232.119.386.175.444.274.059.1.059.58-.146 1.16z"/></svg>
+                            </div>
+                            <div matListItemTitle>Whatsapp</div>
+                          </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-divider></mat-divider>
+                        <mat-list-item matTooltip="Clique para editar ou apagar" style="cursor: pointer;" (click)="editUser()">
+                            <div matListItemIcon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.498 6.186a3.006 3.006 0 00-2.119-2.124C19.814 3.481 12 3.481 12 3.481s-7.814 0-9.379.581a3.006 3.006 0 00-2.119 2.124C0 8.282 0 12.002 0 12.002s0 3.72.502 5.816a3.006 3.006 0 002.119 2.124c1.565.581 9.379.581 9.379.581s7.814 0 9.379-.581a3.006 3.006 0 002.119-2.124c.502-2.096.502-5.816.502-5.816s0-3.72-.502-5.816zM9.747 15.315V8.689l6.555 3.313-6.555 3.313z"/></svg>
+                            </div>
+                            <div matListItemTitle>Youtube</div>
+                          </mat-list-item>
+                      </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-sm-8">
+            <mat-card>
+                <mat-card-content>
+                    <mat-card-title>
+                        Sobre nós
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        tenant?.description
+                    </mat-card-subtitle>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

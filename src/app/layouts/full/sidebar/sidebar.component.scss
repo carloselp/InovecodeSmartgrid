@@ -1,0 +1,67 @@
+.mat-list-item {
+  padding-top: 4px; /* Ajuste o espaçamento superior conforme necessário */
+  padding-bottom: 4px; /* Ajuste o espaçamento inferior conforme necessário */
+
+  .mat-line {
+    font-size: 14px; /* Ajuste o tamanho da fonte conforme necessário */
+  }
+}
+
+.ml-auto-rotate {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease; /* Adiciona uma transição suave */
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 240px;
+}
+
+mat-icon {
+  margin-right: 8px;
+}
+
+
+/* Estilos para o menu */
+.menu-item {
+  padding: 10px 20px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.menu-item:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.05);
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: 100%;
+  color: inherit;
+}
+
+.menu-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.menu-text {
+  font-weight: 300;
+  color: #ff5722;
+  transition: color 0.3s;
+}
+
+.menu-link:hover .menu-text {
+  color: #e64a19; /* Um tom mais escuro de laranja */
+}
+
+/* Adiciona um efeito suave na imagem ao passar o mouse */
+.menu-link:hover .menu-icon {
+  transform: rotate(360deg);
+  transition: transform 0.3s ease-in-out;
+}

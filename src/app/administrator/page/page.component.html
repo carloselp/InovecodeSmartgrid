@@ -1,0 +1,98 @@
+<div class="row">
+	<mat-card-content>
+		<mat-card-title style="font-weight: 500; color: gray;">Cadastro de Páginas</mat-card-title>
+		<mat-card-subtitle>
+			<a style="color: #ff5722;" routerLink="/">Início</a> >
+			<a style="color: #ff5722;">Página</a>
+		</mat-card-subtitle>
+	</mat-card-content>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<mat-card>
+			<mat-card-content>
+				<div class="row">
+					<div class="col-sm-10">
+						<mat-form-field color="accent" appearance="outline">
+							<mat-label>Pesquisar Páginas</mat-label>
+							<input matInput id="exampleInputEmail3" placeholder="Dados do perfil" type="text" class="teste"
+                     (keyup)="applyFilter($event)" name="classeSmart">
+						</mat-form-field>
+					</div>
+					<div class="col-sm-2">
+						<button mat-raised-button color="primary" class="add-button" (click)="add()" matTooltip="Adicionar nova página">
+							<mat-icon>grade</mat-icon>
+							Página
+						</button>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<mat-card>
+			<mat-card-content>
+				<div class="row flex-grow">
+					<div class="col-12 grid-margin stretch-card">
+						<div class="card card-rounded">
+							<div class="card-body">
+								<div class="table-responsive table-condensed">
+									<table mat-table [dataSource]="pages" matSort class="table-striped table-sm"
+										matTableFilter>
+										<ng-container matColumnDef="group_menu">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: 500; color: gray;"> Grupo </th>
+											<td mat-cell *matCellDef="let element" style="font-weight: 500; color: gray;">
+												{{element.group_menu}} </td>
+										</ng-container>
+										<ng-container matColumnDef="name_page">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: 500; color: gray;"> Nome </th>
+											<td mat-cell *matCellDef="let element" style="font-weight: 500; color: gray;">
+												{{element.name_page}} </td>
+										</ng-container>
+										<ng-container matColumnDef="icon">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: 500; color: gray;" > Icone </th>
+											<td mat-cell *matCellDef="let element" style="font-weight: 500; color: gray;">
+												{{element.icon}}
+											</td>
+										</ng-container>
+										<ng-container matColumnDef="route">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: 500; color: gray;"> Rota </th>
+											<td mat-cell *matCellDef="let element" style="font-weight: 500; color: gray;">
+												{{element.route}}
+											</td>
+										</ng-container>
+										<ng-container matColumnDef="action">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: 500; color: gray;"> Ações </th>
+											<td mat-cell *matCellDef="let element" style="font-weight: 500; color: gray;">
+
+												<a  style="margin-right: 10px; cursor: pointer; font-size: large; color: #26c6da;"
+													matTooltip="Editar informações da página"
+													(click)="edit(element)">
+													<mat-icon>edit_document</mat-icon>
+												</a>
+
+												<a style="cursor: pointer; font-size: large; color: rgb(255, 119, 119);"
+													matTooltip="Excluir página" (click)="delete(element)">
+													<mat-icon>delete</mat-icon>
+												</a>
+
+											</td>
+										</ng-container>
+										<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+										<tr mat-row *matRowDef="let row; columns: displayedColumns;"
+											style="cursor: pointer;"></tr>
+									</table>
+								</div>
+								<mat-paginator color="accent" [pageSize]="15" [pageSizeOptions]="[15, 25, 50, 100]">
+								</mat-paginator>
+							</div>
+						</div>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>

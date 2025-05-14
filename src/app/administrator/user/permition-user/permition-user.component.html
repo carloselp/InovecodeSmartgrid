@@ -1,0 +1,74 @@
+<div class="row">
+	<mat-card-content>
+		<mat-card-title style="font-weight: 500; color: gray;">Permissão de usuários</mat-card-title>
+		<mat-card-subtitle>
+			<a style="color: #ff5722;" routerLink="/">Início</a> >
+			<a style="color: #ff5722;" routerLink="/user">Usuário</a> >
+			<a style="color: #ff5722;">Permissão</a>
+		</mat-card-subtitle>
+	</mat-card-content>
+</div>
+<div class="row">
+	<div class="col-lg-6">
+		<mat-card class="card-container">
+			<mat-card-content>
+				<mat-card-title>Associar Perfil</mat-card-title>
+				<mat-card-subtitle>Associe um grupo de funcionalidades para um usuário.</mat-card-subtitle>
+				<div class="table-container">
+					<p>
+						Perfis Associados: <b style="color: #7c21f3;">{{profilesUser.length}}</b>
+					</p>
+					<table mat-table [dataSource]="profilesUser">
+
+						<ng-container matColumnDef="action">
+							<th mat-header-cell *matHeaderCellDef> Associar </th>
+							<td mat-cell *matCellDef="let element">
+								<section class="example-section">
+									<mat-checkbox class="example-margin" [checked]="checked(element.id)" (click)="addProfile(element)"></mat-checkbox>
+								</section>
+							</td>
+						</ng-container>
+
+						<!-- Name Column -->
+						<ng-container matColumnDef="profile">
+							<th mat-header-cell *matHeaderCellDef> Perfil </th>
+							<td mat-cell *matCellDef="let element"> {{element.profile_name}} </td>
+						</ng-container>
+
+						<tr mat-header-row *matHeaderRowDef="displayedColumnsProfile"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumnsProfile;"></tr>
+					</table>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+	<div class="col-lg-6">
+		<mat-card class="card-container">
+			<mat-card-content>
+				<mat-card-title>Associar Páginas</mat-card-title>
+				<mat-card-subtitle>Aqui você associa páginas específicas.</mat-card-subtitle>
+				<div class="table-container">
+					<table mat-table [dataSource]="pagesUser">
+						<ng-container matColumnDef="action">
+							<th mat-header-cell *matHeaderCellDef> Associar </th>
+							<td mat-cell *matCellDef="let element">
+								<section class="example-section">
+									<mat-checkbox class="example-margin" [checked]="checked(element.id)" (click)="addPage(element)"></mat-checkbox>
+								</section>
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="page">
+							<th mat-header-cell *matHeaderCellDef> Página </th>
+							<td mat-cell *matCellDef="let element"> {{element.page_name}} </td>
+						</ng-container>
+
+						<tr mat-header-row *matHeaderRowDef="displayedColumnsPage"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumnsPage;"></tr>
+					</table>
+				</div>
+
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>

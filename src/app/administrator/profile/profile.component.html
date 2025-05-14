@@ -1,0 +1,164 @@
+<div class="row">
+	<mat-card-content>
+		<mat-card-title style="font-weight: 500; color: gray;">Cadastro e configuração de Perfil</mat-card-title>
+		<mat-card-subtitle>
+			<a style="color: #ff5722;" routerLink="/">Início</a> >
+			<a style="color: #ff5722;">Perfil</a>
+		</mat-card-subtitle>
+	</mat-card-content>
+</div>
+<div class="row">
+	<div class="col-sm-6">
+		<mat-card>
+			<mat-card-content>
+				<mat-card-title style="font-weight: 500; color: gray;">Selecione o Perfil</mat-card-title>
+				<div class="row">
+					<div class="col-sm-9">
+						<mat-form-field color="accent" appearance="outline">
+							<mat-label>Pesquisar Perfil</mat-label>
+							<input matInput id="exampleInputEmail3" placeholder="Digite o nome do perfil"
+								type="text" class="teste" (keyup)="applyFilterProfiles($event)"
+								name="classeSmart">
+						</mat-form-field>
+					</div>
+					<div class="col-sm-3">
+						<button mat-raised-button class="add-button" (click)="addProfile()" matTooltip="Adicionar novo Perfil">
+							<mat-icon>account_circle</mat-icon>
+							Perfil
+						</button>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+	<div class="col-sm-6">
+		<mat-card>
+			<mat-card-content>
+				<mat-card-title style="font-weight: 500; color: gray;">Páginas Vinculadas</mat-card-title>
+				<div class="row">
+					<div class="col-sm-8">
+						<mat-form-field color="accent" appearance="outline">
+							<mat-label>Pesquisar Página</mat-label>
+							<input matInput id="exampleInputEmail4" placeholder="Digite o nome da página"
+								type="text" (keyup)="applyFilterProfilePage($event)"
+								name="classeSmart">
+						</mat-form-field>
+					</div>
+					<div class="col-sm-4">
+						<button mat-raised-button class="add-button" (click)="addProfilePage()" matTooltip="Adicionar nova Página">
+							<mat-icon>grade</mat-icon>
+							Vincular Página
+						</button>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-6">
+		<mat-card>
+			<mat-card-content>
+				<div class="row flex-grow">
+					<div class="col-12 grid-margin stretch-card">
+						<div class="card card-rounded">
+							<div class="card-body">
+								<div class="table-responsive table-condensed">
+									<table mat-table [dataSource]="profiles" matSort class="table-striped table-sm"
+										matTableFilter>
+										<ng-container matColumnDef="name">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header
+												style="font-weight: 500; color: gray;"> Perfil </th>
+											<td mat-cell *matCellDef="let element"
+												style="font-weight: 500; color: gray;">
+												{{element.profile_name}} </td>
+										</ng-container>
+										<ng-container matColumnDef="pages">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header
+												style="font-weight: 500; color: gray;" class="text-center">
+												Páginas Vinculadas </th>
+											<td mat-cell *matCellDef="let element"  class="text-center">
+												<div style="background-color: #7c21f3; padding: 4px;border-radius: 50%; width: 30px; align-items: center; text-align: center;color: white;" (click)="loadProfilePages(element.id)">
+													{{ element.countPages }}
+												</div>
+											</td>
+										</ng-container>
+										<ng-container matColumnDef="action">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header
+												style="font-weight: 500; color: gray;"> Ações </th>
+											<td mat-cell *matCellDef="let element"
+												style="font-weight: 500; color: gray;">
+
+												<a style="margin-right: 10px; cursor: pointer; font-size: large; color: #26c6da;"
+													matTooltip="Editar informações do perfil"
+													(click)="editProfile(element)">
+													<mat-icon>edit_document</mat-icon>
+												</a>
+
+												<a style="cursor: pointer; font-size: large; color: rgb(255, 119, 119);"
+													matTooltip="Excluir perfil" (click)="deleteProfile(element)">
+													<mat-icon>delete</mat-icon>
+												</a>
+
+											</td>
+										</ng-container>
+										<tr mat-header-row *matHeaderRowDef="displayedColumnsProfile"></tr>
+										<tr mat-row *matRowDef="let row; columns: displayedColumnsProfile;"
+											style="cursor: pointer;"></tr>
+									</table>
+								</div>
+								<mat-paginator color="accent" [pageSize]="15" [pageSizeOptions]="[15, 25, 50, 100]">
+								</mat-paginator>
+							</div>
+						</div>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+	<div class="col-sm-6">
+		<mat-card>
+			<mat-card-content>
+				<div class="row flex-grow">
+					<div class="col-12 grid-margin stretch-card">
+						<div class="card card-rounded">
+							<div class="card-body">
+								<div class="table-responsive table-condensed">
+									<table mat-table [dataSource]="profilePages" matSort class="table-striped table-sm"
+										matTableFilter>
+										<ng-container matColumnDef="name">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header
+												style="font-weight: 500; color: gray;"> Nome </th>
+											<td mat-cell *matCellDef="let element"
+												style="font-weight: 500; color: gray;">
+												{{element.page_name}} </td>
+										</ng-container>
+										<ng-container matColumnDef="action">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header
+												style="font-weight: 500; color: gray;"> Ações </th>
+											<td mat-cell *matCellDef="let element"
+												style="font-weight: 500; color: gray;">
+
+												<a style="cursor: pointer; font-size: large; color: rgb(255, 119, 119);"
+													matTooltip="Excluir Página do perfil" (click)="deleteProfilePage(element)">
+													<mat-icon>delete</mat-icon>
+												</a>
+
+											</td>
+										</ng-container>
+										<tr mat-header-row *matHeaderRowDef="displayedColumnsProfilePages"></tr>
+										<tr mat-row *matRowDef="let row; columns: displayedColumnsProfilePages;"
+											style="cursor: pointer;"></tr>
+									</table>
+								</div>
+								<mat-paginator color="accent" [pageSize]="15" [pageSizeOptions]="[15, 25, 50, 100]">
+								</mat-paginator>
+							</div>
+						</div>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>

@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>
+  <img src="../../../assets/images/favicon.png" width="30px" height="30px">
+  Cadastro de Inversores
+</h1>
+<div mat-dialog-content>
+  <form [formGroup]="registerForm">
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>Dados do inversor</h4>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Nome do Inversor</mat-label>
+              <input matInput required placeholder="Nome do Inversor" type="text" formControlName="name">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="button-container" style="padding: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+  <!-- Botão Cancelar com cor vermelha/alaranjada -->
+  <button mat-stroked-button (click)="cancel()" style="font-size: 14px; padding: 8px 16px; color: rgb(255, 136, 0);">
+    <mat-icon>cancel</mat-icon>
+    Cancelar
+  </button>
+
+  <!-- Botão Salvar com cor azul -->
+  <button mat-stroked-button (click)="save()" style="font-size: 14px; padding: 8px 16px; color: rgb(0, 174, 255);">
+    <mat-icon>add_circle</mat-icon>
+    Salvar
+  </button>
+</div>

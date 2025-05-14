@@ -1,0 +1,739 @@
+.d-inline-block {
+  display: inline-block !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.mb-1 {
+  margin-bottom: 1rem !important;
+}
+
+.btn {
+  border: 1px solid #E1E1E1;
+  font-weight: 600;
+  text-decoration: none;
+  color: #222222;
+  height: 30px;
+  padding: .5em 1em;
+  cursor: pointer;
+  margin: 0.2rem;
+  border-radius: 4px;
+}
+
+.goto-modal {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  height: auto;
+  width: auto;
+  border-radius: 4px;
+  background-color: #dddddd;
+  padding: 5px;
+  text-align: left;
+  z-index: 1;
+}
+
+.time-sch-wrapper {
+  overflow: auto;
+  padding-top: 10px;
+  top: 0;
+}
+
+.travel-item {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.custom-tooltip {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  width: 200px;
+  text-align: left;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.travel-item:hover .custom-tooltip {
+  display: block; /* Mostra o tooltip ao passar o mouse */
+}
+
+.tooltip-content {
+  color: #333;
+}
+
+.tooltip-content p {
+  margin: 5px 0;
+}
+
+.tooltip-content strong {
+  color: #007BB8;
+}
+
+.time-sch-wrapper, .time-sch-header-wrapper, .time-sch-table-wrapper {
+  position: relative;
+  margin-top: 20px;
+}
+
+.time-sch-header-wrapper {
+  padding: .5em;
+  margin-bottom: .5em;
+}
+
+.time-sch-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.time-sch-period-container {
+  float: left;
+  position: relative;
+  z-index: 1;
+}
+
+.travel-container {
+  float: right;
+  position: relative;
+  text-align: center;
+  color: #4e9f3d; /* Verde musgo para um destaque moderno */
+  font-weight: 400;
+  z-index: 2;
+}
+
+.time-sch-time-container {
+  overflow-x: auto; 
+  padding-left: 200px;
+}
+
+.time-sch-wrapper .time-sch-section {
+  width: 200px;
+  position: sticky;
+  left: 0;
+  top: 0;
+  background-color: #ffffff; /* Fundo branco para uma aparência limpa */
+  z-index: 10;
+  text-align: center;
+  border-right: 1px solid #e1e1e1; /* Cinza suave para bordas */
+  transition: transform 0.3s ease;
+}
+
+/* Estilos para a tabela */
+.time-sch-wrapper th {
+  border: none; /* Remove todas as bordas */
+  border-bottom: 1px solid #ccc; /* Adiciona apenas borda horizontal */
+}
+
+.time-sch-wrapper td {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e4e4e4; /* Cinza claro para bordas */
+  transition: background-color 0.3s ease;
+}
+
+/* Cabeçalho da tabela */
+.time-sch-wrapper th {
+  background-color: #979797; /* Laranja suave para o cabeçalho */
+  color: #f57c00; /* Laranja mais escuro para o texto */
+  font-weight: bold;
+}
+
+/* Linhas da tabela */
+.time-sch-wrapper td {
+  background-color: #ffffff; /* Fundo branco para células */
+  color: #424242; /* Cinza escuro para o texto */
+}
+
+/* Efeito de destaque ao passar o mouse */
+.time-sch-wrapper td:hover {
+  background-color: #ffe0b2; /* Laranja claro para o hover */
+}
+
+/* Hover para cabeçalhos e células */
+.time-sch-wrapper th:hover, 
+.time-sch-wrapper td:hover {
+  background-color: #ffe6cf; /* LARANJA HOVER DO SECTION */
+}
+
+/* Fundo de alternância suave para o conteúdo */
+.time-sch-content-wrap {
+  position: relative;
+}
+
+/* Section Wrapper com um toque de suavidade */
+.time-sch-section-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.time-sch-section-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.time-sch-item {
+  border-radius: 0px;
+  position: absolute;
+  min-height: 1em;
+  clear: both;
+  background-color: #2299DD;
+  color: white;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #C1C1C1;
+
+  display: flex; /* Alinhamento para todo o item */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  
+}
+
+.time-sch-item-content {
+  display: flex; /* Usando flexbox para alinhamento */
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  text-align: center; /* Centraliza o texto dentro do item */
+  font-size: small; /* Ajuste o tamanho da fonte conforme necessário */
+  overflow: hidden; /* Impede que o conteúdo ultrapasse os limites da div */
+  white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+  position: relative;
+  z-index: 1;
+}
+
+.time-sch-item-content b {
+  font-size: 8px; /* Tamanho ajustado para caber dentro do item */
+  overflow: hidden; /* Impede que o texto ultrapasse a área */
+  text-overflow: ellipsis; /* Adiciona reticências caso o texto seja muito longo */
+  display: block; /* Garante que o texto ocupe a largura total disponível */
+  width: 100%; /* Faz o elemento ocupar toda a largura disponível */
+  text-align: start; /* Garante que o texto dentro do <b> também seja centralizado */
+}
+
+.time-sch-item-start, .time-sch-item-end {
+  border-radius: 5px;
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+}
+
+.time-sch-item-start {
+  border-radius: 5px;
+  left: 1px;
+}
+
+.time-sch-item-end {
+  border-radius: 5px;
+  right: 1px;
+}
+
+.time-sch-current-time {
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  background: transparent;
+  border-left-width: 1px;
+  border-left-color: #000000;
+}
+
+.item-drag-placeholder {
+  position: absolute;
+  background: #ccc;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.not-available{
+  color: #bebebe; /* Verde suave */
+  cursor:not-allowed;
+}
+
+.not-available:hover {
+  color: #858585; /* Verde mais intenso no hover */
+}
+
+.available {
+  color: #a8d5a2; /* Verde suave */
+}
+
+.available:hover {
+  color: #8bc98a; /* Verde mais intenso no hover */
+}
+
+.in-use {
+  color: #a6c8f0; /* Azul suave */
+}
+
+.in-use:hover {
+  color: #8bb4e8; /* Azul mais intenso no hover */
+}
+
+.under-maintenance {
+  color: #f9c89d; /* Laranja suave */
+}
+
+.under-maintenance:hover {
+  color: #e6ad79; /* Laranja mais intenso no hover */
+}
+
+.awaiting-maintenance {
+  color: #f8e6a0; /* Amarelo suave */
+}
+
+.awaiting-maintenance:hover {
+  color: #ebd688; /* Amarelo mais intenso no hover */
+}
+
+.reserved {
+  color: #c9a9d8; /* Roxo suave */
+}
+
+.reserved:hover {
+  color: #b08ac3; /* Roxo mais intenso no hover */
+}
+
+.unavailable {
+  color: #f5a3a3; /* Vermelho suave */
+}
+
+.unavailable:hover {
+  color: #e08787; /* Vermelho mais intenso no hover */
+}
+
+.out-of-service {
+  color: #c8c9cc; /* Cinza suave */
+}
+
+.out-of-service:hover {
+  color: #a6a8ab; /* Cinza mais intenso no hover */
+}
+
+.under-inspection {
+  color: #b9e2e6; /* Azul claro suave */
+}
+
+.under-inspection:hover {
+  color: #98d1d5; /* Azul claro mais intenso no hover */
+}
+
+.awaiting-inspection {
+  color: #f3e8b6; /* Amarelo claro suave */
+}
+
+.awaiting-inspection:hover {
+  color: #e4d69c; /* Amarelo claro mais intenso no hover */
+}
+
+.deactivated {
+  color: #9e9e9e; /* Preto suave */
+}
+
+.deactivated:hover {
+  color: #7f7f7f; /* Preto mais intenso no hover */
+}
+
+.travel-ida {
+  background-color: #8dff96; /* Amarelo sólido */
+  color: #007c0a; /* Contraste para o texto */
+  border-radius: 20px;
+  font-size: 0.9rem;
+  padding: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.travel-ida:hover {
+  background-color: rgb(146, 255, 136); /* Amarelo mais escuro no hover */
+  transform: scale(1.02); /* Efeito leve de crescimento */
+}
+
+.travel-volta {
+  background-color: #b175ff; /* Amarelo sólido */
+  color: #400094; /* Contraste para o texto */
+  border-radius: 20px;
+  font-size: 0.9rem;
+  padding: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.travel-volta:hover {
+  background-color: #c497ff; /* Amarelo mais escuro no hover */
+  transform: scale(1.02); /* Efeito leve de crescimento */
+}
+
+.travel-unknown {
+  background-color: #616161; /* Amarelo sólido */
+  color: #ffffff; /* Contraste para o texto */
+  border-radius: 20px;
+  font-size: 0.9rem;
+  padding: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.travel-unknown:hover {
+  background-color: #8a8a8a; /* Amarelo mais escuro no hover */
+  transform: scale(1.02); /* Efeito leve de crescimento */
+}
+
+/* Viagens Pendentes */
+.travel-pending {
+  background-color: #FFC107; /* Amarelo sólido */
+  color: #333; /* Contraste para o texto */
+  border-radius: 5px;
+  font-size: 0.9rem;
+  padding: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.travel-pending:hover {
+  background-color: #FFB300; /* Amarelo mais escuro no hover */
+  transform: scale(1.05); /* Efeito leve de crescimento */
+}
+
+/* Viagens em Progresso */
+.travel-in-progress {
+  background-color: #00ddff; /* Azul sólido */
+  color: #fff; /* Texto branco para contraste */
+  border-radius: 5px;
+  font-size: 0.9rem;
+  padding: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.travel-in-progress:hover {
+  background-color: #00b5da; /* Azul mais escuro no hover */
+  transform: scale(1.05);
+}
+
+/* Viagens Atrasadas */
+.travel-delayed {
+  background-color: #ff9900; /* Laranja sólido */
+  color: #fff; /* Texto branco para contraste */
+  border-radius: 5px;
+  font-size: 0.9rem;
+  padding: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.travel-delayed:hover {
+  background-color: #e98c00; /* Laranja mais escuro no hover */
+  transform: scale(1.05);
+}
+
+/* Viagens Concluídas */
+.travel-completed {
+  background-color: #00ff88; /* Verde sólido */
+  color: #fff; /* Texto branco */
+  border-radius: 5px;
+  font-size: 0.9rem;
+  padding: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.travel-completed:hover {
+  background-color: #00c468; /* Verde mais escuro no hover */
+  transform: scale(1.05);
+}
+
+/* Viagens Canceladas */
+.travel-cancelled {
+  background-color: #FF00EA; /* Magenta sólido */
+  color: #fff; /* Texto branco */
+  border-radius: 5px;
+  font-size: 0.9rem;
+  padding: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.travel-cancelled:hover {
+  background-color: #D400C7; /* Magenta mais escuro no hover */
+  transform: scale(1.05);
+}
+
+.icon-button {
+  display: flex; /* Usar flexbox para centralizar */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  margin: 5px; /* Espaçamento externo */
+  height: 40px; /* Altura do botão (ajuste conforme necessário) */
+  width: 40px; /* Largura do botão (ajuste conforme necessário) */
+  color: azure; /* Cor do texto */
+  text-align: center; /* Centraliza o texto, se houver */
+}
+
+.circle-enterprise {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #007BB8;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Estiliza o conteúdo à direita */
+.section-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Nome da seção */
+.section-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.grid-left {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: small;
+  padding-left: 5px;
+  font-weight: 500;
+  color: gray;
+}
+
+.grid-right {
+  display: flex;
+  gap: 10px; /* Espaçamento entre os ícones */
+  justify-content: flex-end;
+}
+
+.mat-icon-info {
+  font-size: 24px;
+  color: #77cdff; /* Azul que combina com o nome */
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.mat-icon-info:hover {
+  transform: scale(1.1); /* Aumenta um pouco ao passar o mouse */
+  color: #828bbe; /* Tom de azul mais escuro ao hover */
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+@media (min-width: 768px) {
+  .fab-menu {
+    display: none;
+  }
+}
+
+/* Estilização para telas pequenas (max-width: 768px) */
+@media (max-width: 768px) {
+  .toolbar-content {
+    display: none; /* Esconde a toolbar em telas pequenas */
+  }
+
+  .fab-menu {
+    display: flex !important; /* Garantir que o botão seja exibido */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0c6300;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+  }
+
+  .time-sch-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 50px; /* Adiciona padding para melhorar o visual em telas pequenas */
+  }
+
+  .row-custom {
+    display: none; /* Esconde a exibição em grade */
+  }
+
+  .lista-simplificada {
+    display: block; /* Exibe a lista simplificada */
+  }
+
+  /* Opcional: Estilização da lista para visualização em telas pequenas */
+  .item-lista {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+/* Ajuste de margens para telas menores que 1200px */
+@media (max-width: 1200px) {
+  .time-sch-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* Estilos gerais */
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Espaça o input e o botão */
+  gap: 8px; /* Espaçamento entre input e botão */
+  width: 100%; /* Garante que o contêiner ocupe todo o espaço da célula */
+  overflow: hidden; /* Impede o conteúdo de ultrapassar os limites */
+  box-sizing: border-box; /* Inclui padding e border no tamanho total */
+}
+
+.filter-container input {
+  flex: 1; /* O input ocupa todo o espaço disponível */
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-container a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  color: #555;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.filter-container a:hover {
+  color: #d32f2f; /* Altera a cor do ícone ao passar o mouse */
+}
+
+.date-full-screen {
+  flex: 1; /* O input ocupa todo o espaço disponível */
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-icon {
+  position: absolute;
+  right: -10px;  /* Alinha o ícone à direita */
+  top: 50%;
+  transform: translateY(-50%); /* Centraliza verticalmente */
+  cursor: pointer;
+  z-index: 10; /* Certifique-se de que o ícone esteja acima do item */
+  background-color: #FFFFFF;
+  border-radius: 100%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex; /* Usado para centralizar o ícone dentro do contêiner */
+  justify-content: center; /* Centraliza o ícone horizontalmente */
+  align-items: center; /* Centraliza o ícone verticalmente */
+}
+
+.modal-icon:hover {
+  background-color: #F7F7F7; /* Muda a cor do fundo ao passar o mouse */
+}
+
+.icon {
+  color: #FF5722; /* Cor laranja para o ícone */
+}
+
+.custom-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.custom-menu-item img {
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.custom-menu-item input {
+  margin-right: 10px;
+  width: 100px;
+}
+
+.menu-trigger {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  display: inline-block;
+}

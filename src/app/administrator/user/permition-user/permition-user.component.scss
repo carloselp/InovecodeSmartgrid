@@ -1,0 +1,21 @@
+.table-container {
+    position: relative;
+    min-height: 400px;
+    max-height: 400px;
+    overflow: auto;
+    overflow-y: auto; 
+  }
+
+  .card-container {
+    height: 100%;
+  }
+  
+  table {
+    width: 50%;
+  }
+  
+  .add-button {
+    height: 70%;
+    background-color: #26c6da;
+    color: white;
+  }
