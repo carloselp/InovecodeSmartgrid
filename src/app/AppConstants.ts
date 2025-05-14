@@ -1,6 +1,6 @@
 export class AppConstants {
 
-  public static get baseServidor(): string { return "https://localhost:5001/"}
+  public static get baseServidor(): string { return "https://inovecode-back.azurewebsites.net/"}
   public static get baseLogin(): string { return this.baseServidor + 'api/Login/v1' }
   public static get baseUser(): string { return this.baseServidor + 'api/Users/v1' }
   public static get baseSystemProfileUsers(): string { return this.baseServidor + 'api/SystemProfileUsers/v1' }
