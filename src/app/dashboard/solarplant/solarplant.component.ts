@@ -137,7 +137,7 @@ export class DashboardSolarplantComponent implements OnInit {
       xaxis: {
         categories: categories,
         title: {
-          text: 'Datas de Abertura'
+          text: 'Horário'
         }
       },
       stroke: {
@@ -147,7 +147,7 @@ export class DashboardSolarplantComponent implements OnInit {
         enabled: false
       },
       title: {
-        text: 'Ordens de Serviço por Origem ao Longo do Tempo',
+        text: 'Geração Teórica por Usina ao Longo do Tempo',
         align: 'center'
       },
       tooltip: {
@@ -172,7 +172,7 @@ export class DashboardSolarplantComponent implements OnInit {
     xaxis: {
       categories: [],
       title: {
-        text: 'Datas de Abertura'
+        text: 'Horário'
       }
     },
     stroke: {
@@ -182,7 +182,7 @@ export class DashboardSolarplantComponent implements OnInit {
       enabled: false
     },
     title: {
-      text: 'Ordens de Serviço por Origem ao Longo do Tempo',
+      text: 'Geração Teórica por Usina ao Longo do Tempo',
       align: 'center'
     },
     tooltip: {
