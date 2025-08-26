@@ -22,6 +22,7 @@ import {DashboardSolarplantComponent} from "./solarplant/solarplant.component";
 import {NgApexchartsModule} from "ng-apexcharts";
 import {SolarplantService} from "../service/administrator/solarplant.service";
 import {DashboardSolarplantService} from "../service/dashboard/solarplant.service";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {DashboardSolarplantService} from "../service/dashboard/solarplant.servic
     MatIconModule,
     MatPaginatorModule,
     MatCheckboxModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    MatSelectModule
   ],
   providers: [
     DashboardSolarplantService,

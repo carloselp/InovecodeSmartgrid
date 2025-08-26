@@ -47,6 +47,7 @@ import { ConfigurationComponent } from './layouts/full/configuration/configurati
 import { MatGridListModule } from '@angular/material/grid-list';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { BrowserModule } from '@angular/platform-browser';
+import {MatSelectModule} from "@angular/material/select";
 
 registerLocaleData(ptBr);
 
@@ -90,7 +91,8 @@ registerLocaleData(ptBr);
     MatCheckboxModule,
     MatRadioModule,
     NgApexchartsModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSelectModule
   ],
   providers: [
     LoginService,
