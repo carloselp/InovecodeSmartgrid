@@ -81,7 +81,7 @@ export class DashboardSolarplantComponent implements OnInit {
     }).subscribe({
       next: ({ medicoes, geracoes }) => {
         this.radialCharts = medicoes.map(medicao => this.createRadialChart(medicao));
-        this.lineChartOptions = this.createLineChart(geracoes);
+        this.lineChartOptions = this.createAreaChart(geracoes);
         this.spinner.hide();
       },
       error: (err) => {
@@ -162,14 +162,17 @@ export class DashboardSolarplantComponent implements OnInit {
     };
   }
 
-  private createLineChart(data: any[]): any {
+  private createAreaChart(data: any[]): any {
     return {
       series: [{
-        name: 'Geração Teórica',
-        data: data.map(item => ({ x: new Date(item.createdAt), y: item.value }))
+        name: 'Produção',
+        data: data.map(item => ({
+          x: new Date(item.createdAt),
+          y: item.value
+        }))
       }],
       chart: {
-        type: 'line',
+        type: 'area',
         height: 350
       },
       xaxis: {
@@ -178,15 +181,27 @@ export class DashboardSolarplantComponent implements OnInit {
       stroke: {
         curve: 'smooth'
       },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.4,
+          opacityTo: 0.1,
+          stops: [0, 90, 100]
+        }
+      },
       dataLabels: {
         enabled: false
       },
       title: {
-        text: 'Geração Teórica ao Longo do Tempo'
+        text: 'Produção'
       },
       tooltip: {
         x: {
           format: 'dd/MM/yyyy HH:mm'
+        },
+        y: {
+          formatter: (value: number) => `${value} kW`
         }
       }
     };
