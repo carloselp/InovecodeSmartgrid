@@ -23,6 +23,7 @@ import {NgApexchartsModule} from "ng-apexcharts";
 import {SolarplantService} from "../service/administrator/solarplant.service";
 import {DashboardSolarplantService} from "../service/dashboard/solarplant.service";
 import {MatSelectModule} from "@angular/material/select";
+import {MedicaoDetalheDialogComponent} from "./medicao-detalhe-dialog/medicao-detalhe-dialog.component";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {MatSelectModule} from "@angular/material/select";
     DashboardSolarplantService,
   ],
   declarations: [
-    DashboardSolarplantComponent
+    DashboardSolarplantComponent,
+    MedicaoDetalheDialogComponent
   ],
 })
 export class DashboardComponentsModule {}

@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Histórico de Medição</h2>
+<mat-dialog-content class="px-2 py-2">
+  <apx-chart [series]="lineChartOptions.series!"
+             [chart]="lineChartOptions.chart!"
+             [xaxis]="lineChartOptions.xaxis!"
+             [stroke]="lineChartOptions.stroke!"
+             [dataLabels]="lineChartOptions.dataLabels!"
+             [title]="lineChartOptions.title!"
+             [tooltip]="lineChartOptions.tooltip">
+  </apx-chart>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" mat-dialog-close>Fechar</button>
+</mat-dialog-actions>

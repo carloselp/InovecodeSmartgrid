@@ -14,3 +14,13 @@ export class DashboardSolaplantMedicaoModel {
   ) {
   }
 }
+
+export class DashboardSolaplantGeracaoXOutraMedidaModel {
+  constructor(
+    public createdAt: string,
+    public name: string,
+    public geracao: number,
+    public value: number
+  ) {
+  }
+}

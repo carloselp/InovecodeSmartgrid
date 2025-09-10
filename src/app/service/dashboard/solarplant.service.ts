@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {AppConstants} from "../../AppConstants";
 import {Observable} from "rxjs";
 import {HttpService} from "../core/http.service";
-import {DashboardSolaplantGeracaoModel, DashboardSolaplantMedicaoModel} from "../../shared/dashboard/solarplant.model";
+import {DashboardSolaplantGeracaoModel, DashboardSolaplantGeracaoXOutraMedidaModel, DashboardSolaplantMedicaoModel} from "../../shared/dashboard/solarplant.model";
 import {ProfilePageModel} from "../../shared/administracao/profilepage.model";
 
 @Injectable()
@@ -12,29 +12,6 @@ export class DashboardSolarplantService extends HttpService<DashboardSolaplantGe
   constructor(http: HttpClient) {
     super(http, AppConstants.baseDashboardSolarplant);
   }
-  // public getGeracao(id: number, date: Date): Observable<DashboardSolaplantGeracaoModel[]> {
-  //   const url = `${this.baseUrl}/Dashboard/Solarplant/v1/Geracao?solarplantId=${id}`;
-  //   const dataFormatada = this.formatDateToYYYYMMDD(date);
-  //
-  //   const params = new HttpParams().set('startDate', dataFormatada);
-  //
-  //   return this.http.get<DashboardSolaplantGeracaoModel[]>(url, {
-  //     headers: this.getAuthHeaders(),
-  //     params: params
-  //   });
-  // }
-
-  // public getMedicao(id: number, date: Date): Observable<DashboardSolaplantMedicaoModel[]> {
-  //   const url = `${this.baseUrl}/Dashboard/Solarplant/v1/Medicao?solarplantId=${id}`;
-  //   const dataFormatada = this.formatDateToYYYYMMDD(date);
-  //
-  //   const params = new HttpParams().set('startDate', dataFormatada);
-  //
-  //   return this.http.get<DashboardSolaplantMedicaoModel[]>(url, {
-  //     headers: this.getAuthHeaders(),
-  //     params: params
-  //   });
-  // }
 
   getMedicao(id: number, date: string): Observable<DashboardSolaplantMedicaoModel[]> {
     const url = `${this.baseUrl}/Medicao?solarplantId=${id}&startDate=${date}`;
@@ -48,6 +25,21 @@ export class DashboardSolarplantService extends HttpService<DashboardSolaplantGe
     const url = `${this.baseUrl}/Geracao?solarplantId=${id}&startDate=${date}`;
 
     return this.http.get<DashboardSolaplantGeracaoModel[]>(url, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  getGeracaoXOutraMedida(id: number, date: string, field: number): Observable<DashboardSolaplantGeracaoXOutraMedidaModel[]> {
+    const url = `${this.baseUrl}/GeracaoXOutraMedida?solarplantId=${id}&startDate=${date}&field=${field}`;
+
+    return this.http.get<DashboardSolaplantGeracaoXOutraMedidaModel[]>(url, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  getHistoricoMedicao(id: number, date: string, codigo: number): Observable<{ createdAt: string, value: number, name: string }[]> {
+    const url = `${this.baseUrl}/Medicao/Historico?solarplantId=${id}&startDate=${date}&fieldNumber=${codigo}`;
+    return this.http.get<{ createdAt: string, value: number, name: string }[]>(url, {
       headers: this.getAuthHeaders()
     });
   }

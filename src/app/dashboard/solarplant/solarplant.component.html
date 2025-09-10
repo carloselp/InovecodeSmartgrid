@@ -33,6 +33,16 @@
           </button>
         </div>
 
+        <div class="col-sm-4 mt-2">
+          <span class="text-muted small">
+            Última atualização:
+            <strong *ngIf="ultimaAtualizacao">
+              {{ ultimaAtualizacao | date:'HH:mm:ss' }}
+            </strong>
+            <em *ngIf="!ultimaAtualizacao">(ainda não atualizou)</em>
+          </span>
+        </div>
+
       </form>
     </mat-card-content>
   </mat-card>
@@ -42,7 +52,7 @@
   <!-- Gráficos de Medição (Pie) -->
   <div class="row" *ngIf="radialCharts.length">
     <div class="col-sm-6 col-md-3 mb-3" *ngFor="let chart of radialCharts">
-      <mat-card class="text-center py-2 px-1">
+      <mat-card class="text-center py-2 px-1" (click)="abrirDetalhesMedicao(chart.title)" style="cursor: pointer;">
         <div class="mb-2" style="font-weight: 500">{{ chart.title }}</div>
         <apx-chart
           [series]="chart.series"
@@ -52,6 +62,26 @@
           [fill]="chart.fill"
           [grid]="chart.grid">
         </apx-chart>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Gráficos Duplos: Geração x Outra Medida -->
+  <div class="row" *ngIf="dualLineCharts.length">
+    <div class="col-sm-12 mb-4" *ngFor="let chart of dualLineCharts">
+      <mat-card>
+        <mat-card-content>
+          <div class="mb-2" style="font-weight: 500">{{ chart.title }}</div>
+          <apx-chart
+            [series]="chart.series"
+            [chart]="chart.chart"
+            [xaxis]="chart.xaxis"
+            [yaxis]="chart.yaxis"
+            [stroke]="chart.stroke"
+            [tooltip]="chart.tooltip"
+            [dataLabels]="chart.dataLabels">
+          </apx-chart>
+        </mat-card-content>
       </mat-card>
     </div>
   </div>

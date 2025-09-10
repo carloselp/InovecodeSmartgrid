@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms'
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms'
 import {SolarplantService} from "../../service/administrator/solarplant.service";
-import { ApexChart, ApexNonAxisChartSeries, ApexPlotOptions, ApexDataLabels, ApexAxisChartSeries, ApexXAxis, ApexStroke, ApexTooltip, ApexTitleSubtitle } from 'ng-apexcharts';
+import {ApexChart, ApexDataLabels, ApexAxisChartSeries, ApexXAxis, ApexStroke, ApexTooltip, ApexTitleSubtitle} from 'ng-apexcharts';
 import {SolarplantModel} from "../../shared/administracao/solarplant.model";
-import {MatTableDataSource} from "@angular/material/table";
 import {DashboardSolarplantService} from "../../service/dashboard/solarplant.service";
 import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
 import {forkJoin} from "rxjs";
+import {DashboardSolaplantGeracaoXOutraMedidaModel} from "../../shared/dashboard/solarplant.model";
+import {MatDialog} from "@angular/material/dialog";
+import {MedicaoDetalheDialogComponent} from "../medicao-detalhe-dialog/medicao-detalhe-dialog.component";
 
 @Component({
   standalone: false,
@@ -18,11 +20,14 @@ import {forkJoin} from "rxjs";
     SolarplantService
   ]
 })
-export class DashboardSolarplantComponent implements OnInit {
+export class DashboardSolarplantComponent implements OnInit, OnDestroy {
 
   filtroForm!: FormGroup;
   maxDate = new Date();
   solarplants: SolarplantModel[] = [];
+  dualLineCharts: any[] = [];
+  intervalId: any;
+  ultimaAtualizacao: Date | null = null;
 
   radialCharts: any[] = [];
   lineChartOptions: {
@@ -40,8 +45,10 @@ export class DashboardSolarplantComponent implements OnInit {
     private solarplantService: SolarplantService,
     private dashboardService: DashboardSolarplantService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
-  ) { }
+    private spinner: NgxSpinnerService,
+    private dialog: MatDialog
+  ) {
+  }
 
   ngOnInit(): void {
     this.filtroForm = this.fb.group({
@@ -50,6 +57,16 @@ export class DashboardSolarplantComponent implements OnInit {
     });
 
     this.carregarUsinas();
+
+    this.intervalId = setInterval(() => {
+      this.getData();
+    }, 300000); // 5 minutos
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   carregarUsinas(): void {
@@ -57,8 +74,8 @@ export class DashboardSolarplantComponent implements OnInit {
       this.solarplants = response;
 
       if (this.solarplants.length > 0) {
-        this.filtroForm.patchValue({ usina: this.solarplants[0].id });
-        this.getData();
+        this.filtroForm.patchValue({usina: this.solarplants[0].id});
+        //this.getData();
       } else {
         this.toastr.warning('Nenhuma usina encontrada.');
       }
@@ -77,16 +94,26 @@ export class DashboardSolarplantComponent implements OnInit {
 
     forkJoin({
       medicoes: this.dashboardService.getMedicao(id, date),
-      geracoes: this.dashboardService.getGeracao(id, date)
+      geracoes: this.dashboardService.getGeracao(id, date),
+      geracaoXCorrente: this.dashboardService.getGeracaoXOutraMedida(id, date, 2),
+      geracoesXTensao: this.dashboardService.getGeracaoXOutraMedida(id, date, 3),
+      geracoesXTemperaturaAmbiente: this.dashboardService.getGeracaoXOutraMedida(id, date, 5),
     }).subscribe({
-      next: ({ medicoes, geracoes }) => {
+      next: ({medicoes, geracoes, geracaoXCorrente, geracoesXTensao, geracoesXTemperaturaAmbiente}) => {
         this.radialCharts = medicoes.map(medicao => this.createRadialChart(medicao));
         this.lineChartOptions = this.createAreaChart(geracoes);
+        this.dualLineCharts = [
+          this.createDualAxisChart(geracaoXCorrente, 'Geração x Corrente', 'A'),
+          this.createDualAxisChart(geracoesXTensao, 'Geração x Tensão', 'V'),
+          this.createDualAxisChart(geracoesXTemperaturaAmbiente, 'Geração x Temperatura Ambiente', '°C'),
+        ];
+        this.ultimaAtualizacao = new Date();
         this.spinner.hide();
       },
       error: (err) => {
         this.spinner.hide();
         this.toastr.error('Erro ao carregar os dados do dashboard.');
+        console.error('Erro no forkJoin:', err);
       }
     });
   }
@@ -96,6 +123,102 @@ export class DashboardSolarplantComponent implements OnInit {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+  }
+
+  abrirDetalhesMedicao(nome: string): void {
+    const unidade = this.getUnidadeDeMedida(nome);
+    const historico$ = this.dashboardService.getHistoricoMedicao(this.filtroForm.value.usina, this.formatDate(this.filtroForm.value.data), this.getCodigoUnidadeDeMedida(nome));
+
+    this.spinner.show();
+
+    historico$.subscribe({
+      next: (historico) => {
+        this.spinner.hide();
+        this.dialog.open(MedicaoDetalheDialogComponent, {
+          width: '800px',
+          data: {
+            nome,
+            unidade,
+            historico
+          }
+        });
+      },
+      error: () => {
+        this.spinner.hide();
+        this.toastr.error('Erro ao carregar histórico da medição.');
+      }
+    });
+  }
+
+  private createDualAxisChart(
+    data: DashboardSolaplantGeracaoXOutraMedidaModel[],
+    titulo: string,
+    unidade: string
+  ): any {
+    return {
+      title: titulo,
+      series: [
+        {
+          name: 'Geração (kW)',
+          type: 'line',
+          data: data.map(item => ({
+            x: new Date(item.createdAt),
+            y: item.geracao
+          }))
+        },
+        {
+          name: `Medição (${unidade})`,
+          type: 'line',
+          data: data.map(item => ({
+            x: new Date(item.createdAt),
+            y: item.value
+          }))
+        }
+      ],
+      chart: {
+        type: 'line',
+        height: 350,
+        stacked: false
+      },
+      xaxis: {
+        type: 'datetime',
+        labels: {
+          datetimeUTC: false
+        }
+      },
+      yaxis: [
+        {
+          title: {
+            text: 'Geração (kW)'
+          },
+          labels: {
+            formatter: (val: number) => `${val.toFixed(1)} kW`
+          }
+        },
+        {
+          opposite: true,
+          title: {
+            text: `Medição (${unidade})`
+          },
+          labels: {
+            formatter: (val: number) => `${val.toFixed(1)} ${unidade}`
+          }
+        }
+      ],
+      stroke: {
+        width: [2, 2],
+        curve: 'smooth'
+      },
+      tooltip: {
+        shared: true,
+        x: {
+          format: 'dd/MM/yyyy HH:mm'
+        }
+      },
+      dataLabels: {
+        enabled: false
+      }
+    };
   }
 
   private createRadialChart(medicao: { name: string; value: number }) {
@@ -176,7 +299,10 @@ export class DashboardSolarplantComponent implements OnInit {
         height: 350
       },
       xaxis: {
-        type: 'datetime'
+        type: 'datetime',
+        labels: {
+          datetimeUTC: false
+        }
       },
       stroke: {
         curve: 'smooth'
@@ -206,6 +332,7 @@ export class DashboardSolarplantComponent implements OnInit {
       }
     };
   }
+
   private getUnidadeDeMedida(nome: string): string {
     if (nome.includes('Corrente')) return 'A';
     if (nome.includes('Irradiação')) return 'W/m²';
@@ -214,6 +341,17 @@ export class DashboardSolarplantComponent implements OnInit {
     if (nome.includes('Umidade')) return '%';
     if (nome.includes('Vento')) return 'm/s';
     return '';
+  }
+
+  private getCodigoUnidadeDeMedida(nome: string): number {
+    if (nome.includes('Corrente')) return 2;
+    if (nome.includes('Irradiação')) return 6;
+    if (nome.includes('Placa')) return 4;
+    if (nome.includes('Ambiente')) return 5;
+    if (nome.includes('Tensão')) return 3;
+    if (nome.includes('Umidade')) return 8;
+    if (nome.includes('Vento')) return 7;
+    return 0;
   }
 
 }
