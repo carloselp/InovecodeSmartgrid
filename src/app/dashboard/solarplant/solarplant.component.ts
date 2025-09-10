@@ -70,6 +70,8 @@ export class DashboardSolarplantComponent implements OnInit, OnDestroy {
   }
 
   carregarUsinas(): void {
+    this.spinner.show();
+
     this.solarplantService.getAll().subscribe(response => {
       this.solarplants = response;
 
@@ -79,6 +81,8 @@ export class DashboardSolarplantComponent implements OnInit, OnDestroy {
       } else {
         this.toastr.warning('Nenhuma usina encontrada.');
       }
+
+      this.spinner.hide();
     });
   }
 
