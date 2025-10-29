@@ -1,0 +1,209 @@
+<!-- Cabeçalho / Breadcrumb -->
+<div class="row">
+  <mat-card-content>
+    <mat-card-title style="font-weight: 500; color: gray;">Notificações</mat-card-title>
+    <mat-card-subtitle>
+      <a style="color: #ff5722;" routerLink="/">Início</a> >
+      <a style="color: #ff5722;">Notificações</a>
+    </mat-card-subtitle>
+  </mat-card-content>
+</div>
+
+<!-- Filtro -->
+<div class="row">
+  <div class="col-sm-12">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-sm-12">
+            <mat-form-field color="accent" appearance="outline" class="w-100">
+              <mat-label>Pesquisar Notificações</mat-label>
+              <input
+                matInput
+                placeholder="Título, tipo, usina, status..."
+                (keyup)="applyFilter($event)"
+              />
+              <button mat-icon-button matSuffix aria-label="Limpar" *ngIf="filterValue" (click)="clearFilter()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<!-- Lista -->
+<div class="row">
+  <div class="col-12">
+    <mat-card>
+      <mat-card-content>
+        <div class="row flex-grow">
+          <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+              <div class="card-body">
+                <div class="table-responsive table-condensed">
+                  <table
+                    mat-table
+                    [dataSource]="dataSource"
+                    matSort
+                    class="table-striped table-sm notifications-table"
+                    multiTemplateDataRows
+                  >
+                    <!-- Tipo -->
+                    <ng-container matColumnDef="type">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th">Tipo</th>
+                      <td mat-cell *matCellDef="let e" class="td">
+                        <mat-chip-set>
+                          <mat-chip [ngClass]="chipColor(e.type)" class="chip">{{ e.type }}</mat-chip>
+                        </mat-chip-set>
+                      </td>
+                    </ng-container>
+
+                    <!-- Título -->
+                    <ng-container matColumnDef="title">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th">Título</th>
+                      <td mat-cell *matCellDef="let e" class="td">
+                        <span class="title">{{ e.title }}</span>
+                      </td>
+                    </ng-container>
+
+                    <!-- Origem -->
+                    <ng-container matColumnDef="source">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th">Origem</th>
+                      <td mat-cell *matCellDef="let e" class="td">
+                        <mat-icon inline class="mr-4">solar_power</mat-icon>
+                        <span>{{ e.source }}</span>
+                      </td>
+                    </ng-container>
+
+                    <!-- Prioridade -->
+                    <ng-container matColumnDef="priority">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th">Prioridade</th>
+                      <td mat-cell *matCellDef="let e" class="td">
+                        <span class="prio" [ngClass]="e.priority.toLowerCase()">{{ e.priority }}</span>
+                      </td>
+                    </ng-container>
+
+                    <!-- Status -->
+                    <ng-container matColumnDef="status">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th">Status</th>
+                      <td mat-cell *matCellDef="let e" class="td">
+                        <span class="status" [ngClass]="e.status">{{ e.status }}</span>
+                      </td>
+                    </ng-container>
+
+                    <!-- Data/Hora -->
+                    <ng-container matColumnDef="timestamp">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th">Data/Hora</th>
+                      <td mat-cell *matCellDef="let e" class="td">
+                        {{ e.timestamp | date: 'dd/MM/yyyy HH:mm' }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Ações -->
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef class="th">Ações</th>
+                      <td mat-cell *matCellDef="let e" class="td">
+                        <a
+                          style="margin-right: 10px; cursor: pointer; font-size: large; color: #26c6da;"
+                          matTooltip="Ver detalhes"
+                          (click)="toggleExpand(e)"
+                        >
+                          <mat-icon>{{ expandedElement === e ? 'expand_less' : 'expand_more' }}</mat-icon>
+                        </a>
+                        <a
+                          style="cursor: pointer; font-size: large; color: rgb(255, 119, 119);"
+                          matTooltip="Marcar como lida"
+                          (click)="markAsRead(e)"
+                        >
+                          <mat-icon>task_alt</mat-icon>
+                        </a>
+                      </td>
+                    </ng-container>
+
+                    <!-- Linha padrão -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+                    <tr
+                      mat-row
+                      *matRowDef="let row; columns: displayedColumns"
+                      class="data-row"
+                      [class.expanded]="expandedElement === row"
+                    ></tr>
+
+                    <!-- Linha de detalhes com mat-expansion-panel -->
+                    <ng-container matColumnDef="detail">
+                      <td mat-cell *matCellDef="let e" [attr.colspan]="displayedColumns.length" class="detail-cell">
+                        <mat-accordion class="detail-accordion">
+                          <mat-expansion-panel [expanded]="expandedElement === e" (closed)="expandedElement = null">
+                            <mat-expansion-panel-header>
+                              <mat-panel-title style="font-weight: 500; color: gray;">
+                                Detalhes da Notificação
+                              </mat-panel-title>
+                              <mat-panel-description>
+                                {{ e.title }} — {{ e.source }}
+                              </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <div class="detail-grid">
+                              <div>
+                                <div class="label">Mensagem</div>
+                                <div class="value">{{ e.message }}</div>
+                              </div>
+                              <div>
+                                <div class="label">Métricas</div>
+                                <div class="value">
+                                  <div *ngIf="e.metrics?.generation !== undefined">
+                                    Geração atual: <b>{{ e.metrics.generation }} kW</b>
+                                  </div>
+                                  <div *ngIf="e.metrics?.expected !== undefined">
+                                    Esperado: <b>{{ e.metrics.expected }} kW</b>
+                                  </div>
+                                  <div *ngIf="e.metrics?.inverterId">
+                                    Inversor: <b>{{ e.metrics.inverterId }}</b>
+                                  </div>
+                                  <div *ngIf="e.metrics?.plant">
+                                    Usina: <b>{{ e.metrics.plant }}</b>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <div class="label">Recomendação</div>
+                                <div class="value">{{ e.recommendation || '—' }}</div>
+                              </div>
+                            </div>
+
+                            <div class="detail-footer">
+                              <button mat-button color="primary" (click)="acknowledge(e)">
+                                <mat-icon>done</mat-icon>
+                                Confirmar leitura
+                              </button>
+                              <button mat-button color="accent" (click)="openRelated(e)">
+                                <mat-icon>insights</mat-icon>
+                                Ver dados relacionados
+                              </button>
+                            </div>
+                          </mat-expansion-panel>
+                        </mat-accordion>
+                      </td>
+                    </ng-container>
+
+                    <!-- Row detalhe -->
+                    <tr
+                      mat-row
+                      *matRowDef="let row; columns: ['detail']"
+                      class="detail-row"
+                    ></tr>
+                  </table>
+                </div>
+
+                <mat-paginator color="accent" [pageSize]="15" [pageSizeOptions]="[15, 25, 50, 100]"></mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+.w-100 { width: 100%; }
+.mr-4 { margin-right: 4px; }
+
+.notifications-table .th {
+  font-weight: 500;
+  color: gray;
+}
+.notifications-table .td {
+  font-weight: 500;
+  color: gray;
+}
+
+.title { color: #4a4a4a; }
+
+.prio {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.prio.alta { background: #ffebee; color: #e53935; }
+.prio.média, .prio.media { background: #fff8e1; color: #ff8f00; }
+.prio.baixa { background: #e0f7fa; color: #00838f; }
+
+.status {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.status.novo { background: #e8f5e9; color: #2e7d32; }
+.status.lido { background: #eceff1; color: #546e7a; }
+.status.em_andamento { background: #fff3e0; color: #ef6c00; }
+
+.chip {
+  color: #fff;
+  font-weight: 600;
+}
+.chip-falha { background: #e53935; }
+.chip-baixa { background: #ff8f00; }
+.chip-manutencao { background: #6d4c41; }
+.chip-sistema { background: #26c6da; }
+
+.data-row.expanded { background: #fafafa; }
+.detail-row .detail-cell { padding: 0 !important; }
+.detail-accordion {
+  background: #fafafa;
+  border-top: 1px solid #eee;
+}
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 8px 16px 0 16px;
+}
+.detail-grid .label {
+  font-size: 12px;
+  color: #9e9e9e;
+  text-transform: uppercase;
+}
+.detail-grid .value {
+  margin-top: 4px;
+  color: #424242;
+}
+.detail-footer {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px 16px 16px;
+  border-top: 1px dashed #e0e0e0;
+}
+
+@media (max-width: 960px) {
+  .detail-grid { grid-template-columns: 1fr; }
+}

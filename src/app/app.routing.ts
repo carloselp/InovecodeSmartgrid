@@ -30,6 +30,10 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardComponentsModule)
       },
       {
+        path: '',
+        loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule)
+      },
+      {
         path: 'configuration',
         component: ConfigurationComponent
       },
