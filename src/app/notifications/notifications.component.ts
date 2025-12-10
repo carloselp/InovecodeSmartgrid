@@ -11,6 +11,16 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ToastrService} from 'ngx-toastr';
 import {DialogService} from 'src/app/service/shared/dialog.service';
 import {NgxSpinnerService} from 'ngx-spinner';
+import * as L from 'leaflet';
+import { AfterViewInit } from '@angular/core';
+
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'assets/marker-icon-2x.png',
+  iconUrl: 'assets/marker-icon.png',
+  shadowUrl: 'assets/marker-shadow.png'
+});
 
 export interface NotificationItem {
   type: 'Falha' | 'Baixa Geração' | 'Manutenção' | 'Sistema';
@@ -35,7 +45,15 @@ export interface NotificationItem {
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss'
 })
-export class NotificationsComponent {
+export class NotificationsComponent implements AfterViewInit {
+
+  ngAfterViewInit(): void {
+    // Garante que o mapa redesenhe corretamente após a view estar pronta
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 200);
+  }
+
   displayedColumns: string[] = ['type', 'title', 'source', 'priority', 'status', 'timestamp', 'action'];
 
   /** MOCK: eventos reais comuns no setor solar */
@@ -149,4 +167,67 @@ export class NotificationsComponent {
       'chip-sistema': type === 'Sistema',
     };
   }
+
+  //mapa
+
+  usinaNome = 'SENAI IST';
+  usinaLat = -3.8492973;
+  usinaLng = -38.5990356;
+  criticidade: 'Alta' | 'Média' | 'Baixa' = 'Alta';
+
+  zoomLevel = 17;
+  mapCenter = new L.LatLng(this.usinaLat, this.usinaLng);
+
+  mapOptions: L.MapOptions = {
+    layers: [
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+      })
+    ],
+    zoom: this.zoomLevel,
+    center: this.mapCenter,
+  };
+
+  mapLayers: L.Layer[] = [
+    L.marker(new L.LatLng(this.usinaLat, this.usinaLng), {
+      icon: this.getCustomIcon(this.criticidade)
+    }).bindPopup(`<b>${this.usinaNome}</b><br/>Criticidade: ${this.criticidade}`)
+  ];
+
+  getUnreadCount(): number {
+    return this.notifications.filter(n => n.status !== 'lido').length;
+  }
+
+  getCustomIcon(nivel: string): L.DivIcon {
+    let color = this.getCriticidadeColor(nivel);
+
+    // Você pode usar um SVG embutido (Data URL) ou trocar por imagem custom
+    return L.divIcon({
+      html: `
+      <div style="
+        background-color: ${color};
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        border: 2px solid white;
+        box-shadow: 0 0 6px rgba(0,0,0,0.4);
+      " title="Usina: ${this.usinaNome}"></div>
+    `,
+      className: '',
+      iconSize: [20, 20],
+      iconAnchor: [10, 10]
+    });
+  }
+
+
+  getCriticidadeColor(nivel: string): string {
+    switch (nivel) {
+      case 'Alta': return '#f44336'; // vermelho
+      case 'Média': return '#ff9800'; // laranja
+      case 'Baixa': return '#4caf50'; // verde
+      default: return 'gray';
+    }
+  }
+
 }

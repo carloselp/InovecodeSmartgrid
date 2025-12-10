@@ -73,3 +73,41 @@
 @media (max-width: 960px) {
   .detail-grid { grid-template-columns: 1fr; }
 }
+
+::ng-deep .leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
+}
+
+.usina-mapa-card {
+  margin-bottom: 16px;
+
+  .notificacoes-indicador {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .badge {
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 12px;
+      background-color: #d32f2f;
+      color: white;
+    }
+  }
+
+  // Garante altura do mapa
+  .leaflet-map-wrapper {
+    height: 300px;
+    position: relative;
+  }
+}
+
+.criticidade-marker {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}

@@ -14,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {RouterModule} from "@angular/router";
 import {NotificationsRoutes} from "../notifications/notifications.routing";
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import {NotificationsRoutes} from "../notifications/notifications.routing";
     MatTooltipModule,
     MatChipsModule,
     MatButtonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    LeafletModule
   ],
   declarations: [
     NotificationsComponent
