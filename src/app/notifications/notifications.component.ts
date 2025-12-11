@@ -23,7 +23,7 @@ L.Icon.Default.mergeOptions({
 });
 
 export interface NotificationItem {
-  type: 'Falha' | 'Baixa Geração' | 'Manutenção' | 'Sistema';
+  type: 'Falha' | 'Baixa Geração' | 'Manutenção' | 'Sistema' | 'Comunicação' | 'Elétrico';
   title: string;
   source: string; // usina/equipamento
   priority: 'Alta' | 'Média' | 'Baixa';
@@ -54,13 +54,14 @@ export class NotificationsComponent implements AfterViewInit {
     }, 200);
   }
 
-  displayedColumns: string[] = ['type', 'title', 'source', 'priority', 'status', 'timestamp', 'action'];
+  //displayedColumns: string[] = ['type', 'title', 'source', 'priority', 'status', 'timestamp', 'action'];
+  displayedColumns: string[] = ['type', 'title', 'priority', 'timestamp', 'action'];
 
   /** MOCK: eventos reais comuns no setor solar */
   notifications: NotificationItem[] = [
     {
-      type: 'Falha',
-      title: 'Falha de comunicação com inversor',
+      type: 'Comunicação',
+      title: 'checar hardware e sinal, sistema fora do ar',
       source: 'Inversor #INV-07 · Usina Solarplant A',
       priority: 'Alta',
       status: 'novo',
@@ -70,38 +71,38 @@ export class NotificationsComponent implements AfterViewInit {
       metrics: { inverterId: 'INV-07', plant: 'Solarplant A' }
     },
     {
-      type: 'Baixa Geração',
-      title: 'Geração abaixo do esperado',
+      type: 'Elétrico',
+      title: 'subperformance – tipo não identificado',
       source: 'String 3 · Usina Solarplant B',
       priority: 'Média',
-      status: 'em_andamento',
+      status: 'novo',
       timestamp: new Date(new Date().setHours(new Date().getHours() - 1)),
       message: 'Produção atual 22% menor que o previsto pelo irradiance model.',
       recommendation: 'Inspecione sombreamento e sujeira dos módulos; revisar MPPT.',
       metrics: { generation: 42.3, expected: 54.1, plant: 'Solarplant B' }
     },
     {
-      type: 'Manutenção',
-      title: 'Manutenção preventiva programada',
+      type: 'Elétrico',
+      title: 'possível sombreamento',
       source: 'Usina Solarplant C',
-      priority: 'Baixa',
-      status: 'lido',
+      priority: 'Alta',
+      status: 'novo',
       timestamp: new Date(new Date().setDate(new Date().getDate() - 1)),
       message: 'Checklist trimestral de manutenção amanhã às 08:00.',
       recommendation: 'Confirmar equipe e EPI. Bloquear agenda dos técnicos.',
       metrics: { plant: 'Solarplant C' }
     },
-    {
-      type: 'Sistema',
-      title: 'Atualização de firmware disponível',
-      source: 'Inversores Série X',
-      priority: 'Baixa',
-      status: 'novo',
-      timestamp: new Date(new Date().setMinutes(new Date().getMinutes() - 35)),
-      message: 'Firmware v2.3.1 disponível com correções de estabilidade.',
-      recommendation: 'Aplicar atualização fora do horário de pico.',
-      metrics: { }
-    }
+    // {
+    //   type: 'Sistema',
+    //   title: 'Atualização de firmware disponível',
+    //   source: 'Inversores Série X',
+    //   priority: 'Baixa',
+    //   status: 'novo',
+    //   timestamp: new Date(new Date().setMinutes(new Date().getMinutes() - 35)),
+    //   message: 'Firmware v2.3.1 disponível com correções de estabilidade.',
+    //   recommendation: 'Aplicar atualização fora do horário de pico.',
+    //   metrics: { }
+    // }
   ];
 
   dataSource = new MatTableDataSource<NotificationItem>(this.notifications);
