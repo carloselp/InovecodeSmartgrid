@@ -1,51 +1,93 @@
-<div class="login-container">
-  <mat-card class="login-card">
-    <img src="../../../assets/images/logo.png" alt="Logo" class="logo">
+<div class="login-page">
+  <!-- Fundo da usina solar -->
+  <div class="bg-overlay"></div>
 
-    <!-- Formulário -->
-    <form (ngSubmit)="confirmaLogin()">
-      <mat-card-content>
-        <mat-form-field appearance="outline">
+  <div class="login-card">
+    <div class="login-header">
+      <!-- Ícone do sol -->
+      <div class="sun-icon">
+        <span class="material-icons">wb_sunny</span>
+      </div>
+
+      <!-- Nome do sistema / logo textual -->
+      <div class="brand">
+        <h1 class="brand-title">InoveSolar</h1>
+        <p class="brand-subtitle">Portal de monitoramento de sua usina solar</p>
+      </div>
+
+      <!-- Título Login -->
+      <h2 class="login-title">Login</h2>
+    </div>
+
+    <form
+      class="login-form"
+      (ngSubmit)="confirmaLogin()"
+      #loginForm="ngForm"
+    >
+      <!-- Usuário -->
+      <div class="form-group">
+        <label for="username" class="field-label">Usuário</label>
+        <div class="input-wrapper">
+          <span class="material-icons input-icon">person</span>
           <input
-            matInput
-            placeholder="Usuário"
+            id="username"
+            type="text"
+            class="input"
+            placeholder="Digite seu usuário"
+            autocomplete="username"
             [(ngModel)]="username"
             name="username"
-            required>
-        </mat-form-field>
+            required
+          />
+        </div>
+      </div>
 
-        <mat-form-field appearance="outline">
+      <!-- Senha -->
+      <div class="form-group">
+        <label for="password" class="field-label">Senha</label>
+        <div class="input-wrapper">
+          <span class="material-icons input-icon">lock</span>
           <input
-            matInput
-            [type]="hide ? 'password' : 'text'"
-            placeholder="Senha"
+            id="password"
+            class="input"
+            [type]="passwordVisible ? 'text' : 'password'"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
             [(ngModel)]="password"
             name="password"
-            required>
-          <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
-            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            required
+          />
+          <button
+            type="button"
+            class="suffix-btn"
+            (click)="togglePasswordVisibility()"
+            aria-label="Mostrar ou ocultar senha"
+          >
+        <span class="material-icons">
+          {{ passwordVisible ? 'visibility_off' : 'visibility' }}
+        </span>
           </button>
-        </mat-form-field>
+        </div>
+      </div>
 
-        <!-- Botão de login -->
-        <button
-          mat-raised-button
-          type="submit"
-          style="background-color: #ff5722; color: white; width: 100%; height: 50px; margin-top: 10px;"
-          [disabled]="isLoading">
-          <ng-container *ngIf="!isLoading; else loadingTemplate">Acessar</ng-container>
-        </button>
+      <!-- Botão principal -->
+      <button
+        type="submit"
+        class="primary-button"
+        [disabled]="isLoading || loginForm.invalid"
+      >
+        <ng-container *ngIf="!isLoading; else loadingTemplate">
+          Entrar
+        </ng-container>
 
-        <!-- Template de carregamento -->
         <ng-template #loadingTemplate>
-          <mat-spinner
-            [diameter]="24"
-            class="spinner-white"
-            style="margin: auto; display: block;"
-            color="warn">
-          </mat-spinner>
+          <div class="loading-content">
+            <span class="spinner-inline"></span>
+            <span>Autenticando...</span>
+          </div>
         </ng-template>
-      </mat-card-content>
+      </button>
+
     </form>
-  </mat-card>
+  </div>
 </div>
